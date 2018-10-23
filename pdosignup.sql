@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS `userdata` (
+  `id` int(11) NOT NULL,
+  `FullName` varchar(200) DEFAULT NULL,
+  `UserName` varchar(12) DEFAULT NULL,
+  `UserEmail` varchar(200) DEFAULT NULL,
+  `UserMobileNumber` varchar(10) DEFAULT NULL,
+  `LoginPassword` varchar(255) DEFAULT NULL,
+  `RegDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+ 
+-- Indexes for table `userdata`
+--
+ALTER TABLE `userdata`
+  ADD PRIMARY KEY (`id`);
+ 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+ 
+--
+-- AUTO_INCREMENT for table `userdata`
+--
+ALTER TABLE `userdata`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
