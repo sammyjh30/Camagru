@@ -45,9 +45,10 @@ if (isset($_POST['reg_user'])) {
 		// $hash = password_hash($password_1, PASSWORD_DEFAULT);
 		$hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
 		// $hashed_password = "$2y$10$BBCpJxgPa8K.iw9ZporxzuW2Lt478RPUV/JFvKRHKzJhIwGhd1tpa";
+		$activation_code = md5(rand());
 
 		// Query for Insertion
-		$sql="INSERT INTO users(username, name, surname, email, password) VALUES(:username,:name,:surname,:email,:password)";
+		$sql="INSERT INTO users(username, name, surname, email, password, activation_code) VALUES(:username,:name,:surname,:email,:password)";
 		$query = $pdo->prepare($sql);
 		// Binding Post Values
 		$query->bindParam(':username',$username,PDO::PARAM_STR);
@@ -59,6 +60,38 @@ if (isset($_POST['reg_user'])) {
 		$lastInsertId = $pdo->lastInsertId();
 		if($lastInsertId) {
 			$msg="You have signup  Scuccessfully";
+
+			// if(isset($result))
+			// {
+				// https://www.webslesson.info/2017/12/php-registration-script-with-email-confirmation.html
+			 $base_url = "http://localhost/Camagru_repository/PDO_setup_grp/";
+			 $mail_body = "
+			 <p>Hello ".$_POST['username'].",</p>
+			 <p>Thank you for registering to Camagru! Your username and password will work only after your email verification.</p>
+			 <p>Please Open this link to verified your email address - ".$base_url."email_verification.php?activation_code=".$user_activation_code."
+			 <p>Best Regards,<br />Webslesson</p>
+			 ";
+			 require 'class/class.phpmailer.php';
+			 $mail = new PHPMailer;
+			 $mail->IsSMTP();        //Sets Mailer to send message using SMTP
+			 $mail->Host = 'smtpout.secureserver.net';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
+			 $mail->Port = '80';        //Sets the default SMTP server port
+			 $mail->SMTPAuth = true;       //Sets SMTP authentication. Utilizes the Username and Password variables
+			 $mail->Username = 'xxxxxxxx';     //Sets SMTP username
+			 $mail->Password = 'xxxxxxxx';     //Sets SMTP password
+			 $mail->SMTPSecure = '';       //Sets connection prefix. Options are "", "ssl" or "tls"
+			 $mail->From = 'info@webslesson.info';   //Sets the From email address for the message
+			 $mail->FromName = 'Webslesson';     //Sets the From name of the message
+			 $mail->AddAddress($_POST['user_email'], $_POST['user_name']);  //Adds a "To" address   
+			 $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
+			 $mail->IsHTML(true);       //Sets message type to HTML    
+			 $mail->Subject = 'Email Verification';   //Sets the Subject of the message
+			 $mail->Body = $mail_body;       //An HTML or plain text message body
+			 if($mail->Send())        //Send an Email. Return true on success or false on error
+			 {
+			  $message = '<label class="text-success">Register Done, Please check your mail.</label>';
+			 }
+
 		}
 		else {
 			$error="Something went wrong.Please try again";
