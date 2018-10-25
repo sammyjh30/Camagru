@@ -42,8 +42,9 @@ if (isset($_POST['reg_user'])) {
 			echo $e->getMessage();
 		}
 
-		$hash = password_hash($password_1, PASSWORD_DEFAULT);
-		$hashed_password = "$2y$10$BBCpJxgPa8K.iw9ZporxzuW2Lt478RPUV/JFvKRHKzJhIwGhd1tpa";
+		// $hash = password_hash($password_1, PASSWORD_DEFAULT);
+		$hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
+		// $hashed_password = "$2y$10$BBCpJxgPa8K.iw9ZporxzuW2Lt478RPUV/JFvKRHKzJhIwGhd1tpa";
 
 		// Query for Insertion
 		$sql="INSERT INTO users(username, name, surname, email, password) VALUES(:username,:name,:surname,:email,:password)";
@@ -70,7 +71,7 @@ if (isset($_POST['login_user'])) {
 	
 	//Retrieve the field values from our login form.
     $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
-    $passwordAttempt = !empty($_POST['password']) ? trim($_POST['password']) : null;
+    $password = !empty($_POST['password']) ? trim($_POST['password']) : null;
     
 	if (empty($username)) { array_push($errors, "Username is required"); }
 	if (empty($password)) { array_push($errors, "Password is required"); }
@@ -79,44 +80,46 @@ if (isset($_POST['login_user'])) {
 		//Retrieve the user account information for the given username.
 		$sql = "SELECT id, username, password FROM users WHERE username = :username";
 		$stmt = $pdo->prepare($sql);
-		
+
 		//Bind value.
 		$stmt->bindValue(':username', $username);
-		
+
 		//Execute.
 		$stmt->execute();
-		
+
 		//Fetch row.
 		$user = $stmt->fetch(PDO::FETCH_ASSOC);
-		
+
 		//If $row is FALSE.
-		if($user === false) {
+		if($user === false){
 			//Could not find a user with that username!
 			//PS: You might want to handle this error in a more user-friendly manner!
-			die('Incorrect username / password combination!');
+			echo 'Username failed<br/>';
+			die('Username failed<br/>Incorrect username / password combination!');
 		}
 		else {
 			//User account found. Check to see if the given password matches the
 			//password hash that we stored in our users table.
 			
 			//Compare the passwords.
-			$validPassword = password_verify($passwordAttempt, $user['password']);
-			
+			$validPassword = password_verify($password, $user['password']);
+
 			//If $validPassword is TRUE, the login has been successful.
 			if($validPassword){
 				
 				//Provide the user with a login session.
 				$_SESSION['user_id'] = $user['id'];
 				$_SESSION['logged_in'] = time();
+				$_SESSION['username'] = $user['username'];
 				
 				//Redirect to our protected page, which we called home.php
-				header('Location: home.php');
+				header('Location: index.php');
 				exit;
 				
 			}
 			else {
 				//$validPassword was FALSE. Passwords do not match.
-				die('Incorrect username / password combination!');
+				die('Password failed<br/>Incorrect username / password combination!');
 			}
 		}
 	}
