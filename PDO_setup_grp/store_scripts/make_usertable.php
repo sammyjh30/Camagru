@@ -26,6 +26,7 @@ try {
 		`surname` varchar(100) NOT NULL,
 		`email` varchar(100) NOT NULL,
 		`password` varchar(100) NOT NULL,
+		`activated` enum('Y','N') NOT NULL DEFAULT 'N',
 		`activation_code` varchar(100) NOT NULL
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1";
 	
