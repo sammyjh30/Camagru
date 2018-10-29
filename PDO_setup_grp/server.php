@@ -41,53 +41,53 @@ if (isset($_POST['reg_user'])) {
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
-		// $hash = password_hash($password_1, PASSWORD_DEFAULT);
 		$hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
-		// $hashed_password = "$2y$10$BBCpJxgPa8K.iw9ZporxzuW2Lt478RPUV/JFvKRHKzJhIwGhd1tpa";
 		$activation_code = md5(rand());
 
-		// $sql="INSERT INTO users(username, name, surname, email, password, activation_code) VALUES($username, $name, $surname, $email, $hash, $activation_code)";
 		$sql = "INSERT INTO users (username, name, surname, email, password, activation_code) VALUES ('$username', '$name', '$surname', '$email', '$password', '$activation_code')";
 		$pdo->exec($sql);
 
 		$base_url = "http://localhost:8080/Camagru_repository/PDO_setup_grp/";
 		$lastInsertId = $pdo->lastInsertId();
 		if($lastInsertId) {
-			$msg="You have signup  Scuccessfully";
+			$msg = "You have signed up Successfully";
 
-			$header = "From: noreply@localhost.co.za\r\n
-						Reply-To: noreply@localhost.co.za\r\n
-						Return-Path: noreply@localhost.co.za\r\n
-						Content-Type: text/httml; charset=ISO-8859-1\r\n";
+			$header = "From: noreply@localhost.co.za\r\n";
+			$header .= "Reply-To: noreply@localhost.co.za\r\n";
+			$header .= "Return-Path: noreply@localhost.co.za\r\n";
+			$header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 			$message = "<h1>Activate Your Account</h1><br/>
 						<p>Hello $username,</p>
 						<p>Thank you for registering to Camagru! Your username and password will work only after your email verification.</p>
 						<p>Please click on the button below to verify your email address:</p><br/>
-						<p><a href='" . $base_url . "email_verification.php?username=$username&activation_code=$user_activation_code'>
-    					<button>Click me</button>
+						<p><a href='" . $base_url . "confirm_email.php?username=$username&activation_code=$activation_code'>
+    					<button>Verify</button>
 						</a></p>
 						<p>Best Regards,<br />Camagru</p>";
-			mail($email, "Activation email", $message, $header);
+			if (mail($email, "Activation email", $message, $header) == false)
+				echo "Error when sending email<br/>";
+			else
+				echo "email sent<br/>";
 			$_SESSION['message'] = "Check your email for the Activation Link.";
-			header('Location: index.php');
+			// header('Location: index.php');
 
-
-			require_once('mailer/class.phpmailer.php');
-			$mail = new PHPMailer();
-			$mail->IsSMTP(); 
-			$mail->SMTPDebug  = 0;                     
-			$mail->SMTPAuth   = true;                  
-			$mail->SMTPSecure = "ssl";                 
-			$mail->Host       = "smtp.gmail.com";      
-			$mail->Port       = 465;             
-			$mail->AddAddress($email);
-			$mail->Username="yourgmailid@gmail.com";  
-			$mail->Password="yourgmailpassword";            
-			$mail->SetFrom('you@yourdomain.com','Coding Cage');
-			$mail->AddReplyTo("you@yourdomain.com","Coding Cage");
-			$mail->Subject    = $subject;
-			$mail->MsgHTML($message);
-			$mail->Send();
+			// //Find MAMP/php/etc/php.iniv on line 1031
+			// require_once('mailer/class.phpmailer.php');
+			// $mail = new PHPMailer();
+			// $mail->IsSMTP(); 
+			// $mail->SMTPDebug  = 0;                     
+			// $mail->SMTPAuth   = true;                  
+			// $mail->SMTPSecure = "ssl";                 
+			// $mail->Host       = "smtp.gmail.com";      
+			// $mail->Port       = 465;             
+			// $mail->AddAddress($email);
+			// $mail->Username="yourgmailid@gmail.com";  
+			// $mail->Password="yourgmailpassword";            
+			// $mail->SetFrom('you@yourdomain.com','Coding Cage');
+			// $mail->AddReplyTo("you@yourdomain.com","Coding Cage");
+			// $mail->Subject    = $subject;
+			// $mail->MsgHTML($message);
+			// $mail->Send();
 
 		}
 		else {

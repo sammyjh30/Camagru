@@ -4,7 +4,7 @@ session_start();
 require('connect.php');
 
 $username = $_GET['username'];
-$activation_code = $_GET['code'];
+$activation_code = $_GET['activation_code'];
 
 $query = $pdo->prepare("SELECT activated FROM camagru_db.users WHERE username = :usr AND activation_code = :con ");
 $query->execute(["usr"=>$username , "con"=>$activation_code]);
