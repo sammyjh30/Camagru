@@ -28,6 +28,7 @@ if (isset($_POST['reg_user'])) {
 	if ($password_1 != $password_2) { array_push($errors, "Your two passwords do not match"); }
 	
 	if (count($errors) == 0) {
+		$_SESSION['username'] = $username;
 		try
 		{
 			$stmt = $pdo->prepare("SELECT username, email FROM users WHERE username=:username OR email=:email");
@@ -41,7 +42,8 @@ if (isset($_POST['reg_user'])) {
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
-		$hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
+		// $hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
+		$hash = hash("whirlpool", $password_1);
 		$activation_code = md5(rand());
 
 		$sql = "INSERT INTO users (username, name, surname, email, password, activation_code) VALUES ('$username', '$name', '$surname', '$email', '$password', '$activation_code')";
@@ -69,29 +71,11 @@ if (isset($_POST['reg_user'])) {
 			else
 				echo "email sent<br/>";
 			$_SESSION['message'] = "Check your email for the Activation Link.";
-			// header('Location: index.php');
-
-			// //Find MAMP/php/etc/php.iniv on line 1031
-			// require_once('mailer/class.phpmailer.php');
-			// $mail = new PHPMailer();
-			// $mail->IsSMTP(); 
-			// $mail->SMTPDebug  = 0;                     
-			// $mail->SMTPAuth   = true;                  
-			// $mail->SMTPSecure = "ssl";                 
-			// $mail->Host       = "smtp.gmail.com";      
-			// $mail->Port       = 465;             
-			// $mail->AddAddress($email);
-			// $mail->Username="yourgmailid@gmail.com";  
-			// $mail->Password="yourgmailpassword";            
-			// $mail->SetFrom('you@yourdomain.com','Coding Cage');
-			// $mail->AddReplyTo("you@yourdomain.com","Coding Cage");
-			// $mail->Subject    = $subject;
-			// $mail->MsgHTML($message);
-			// $mail->Send();
-
+			header('Location: index.php');
 		}
 		else {
 			$error="Something went wrong.Please try again";
+			$_SESSION['error'] = $error;
 		}
 	}
 }
@@ -107,51 +91,73 @@ if (isset($_POST['login_user'])) {
 	if (empty($password)) { array_push($errors, "Password is required"); }
 
 	if (count($errors) == 0) {
+		$password = hash("whirlpool", $password);		
+		
 		//Retrieve the user account information for the given username.
-		$sql = "SELECT id, username, password FROM users WHERE username = :username";
-		$stmt = $pdo->prepare($sql);
+		$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND password = :pass");
+		// $sql = "SELECT id, username, password FROM users WHERE username = :username";
+		// $stmt = $pdo->prepare($sql);
 
 		//Bind value.
-		$stmt->bindValue(':username', $username);
+		// $stmt->bindValue(':username', $username);
 
 		//Execute.
-		$stmt->execute();
+		$stmt->execute(["usr"=>$username, "pass"=>$password]);
+		// $stmt->execute();
 
 		//Fetch row.
-		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+		$user = $stmt->fetchAll();
+		// $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		//If $row is FALSE.
-		if($user === false){
-			//Could not find a user with that username!
-			//PS: You might want to handle this error in a more user-friendly manner!
-			echo 'Username failed<br/>';
-			die('Username failed<br/>Incorrect username / password combination!');
+		if (sizeof($user) == 1) {
+			//checking if verified
+			$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :usr AND activated = 'Y'");
+			$stmt->execute(["usr"=>$username]);
+			$user = $stmt->fetchALL();
+			if (sizeof($user) == 1) {
+				$_SESSION['username'] = $user['usr'];
+				$_SESSION['success'] = "You are logged in!";
+				// $_SESSION['logged_in'] = time();
+				echo "Successfully logged in!<br/>";
+			}
+			else
+				$_SESSION['error'] = "Please check your email to verify your account!";
+			echo "Finished call!!<br/>";
 		}
 		else {
-			//User account found. Check to see if the given password matches the
-			//password hash that we stored in our users table.
-			
-			//Compare the passwords.
-			$validPassword = password_verify($password, $user['password']);
-
-			//If $validPassword is TRUE, the login has been successful.
-			if($validPassword){
-				
-				//Provide the user with a login session.
-				$_SESSION['user_id'] = $user['id'];
-				$_SESSION['logged_in'] = time();
-				$_SESSION['username'] = $user['username'];
-				
-				//Redirect to our protected page, which we called home.php
-				header('Location: index.php');
-				exit;
-				
-			}
-			else {
-				//$validPassword was FALSE. Passwords do not match.
-				die('Password failed<br/>Incorrect username / password combination!');
-			}
+			echo "Failed to get user!<br/>";
 		}
+		// header('location: index.php');
+		//If $row is FALSE.
+		// if($user === false) {
+		// 	//Could not find a user with that username!
+		// 	//PS: You might want to handle this error in a more user-friendly manner!
+		// 	die('Username failed<br/>Incorrect username / password combination!');
+		// }
+		// else {
+		// 	//User account found. Check to see if the given password matches the
+		// 	//password hash that we stored in our users table.
+			
+		// 	//Compare the passwords.
+		// 	// $hash = hash("whirlpool", $password);
+		// 	$validPassword = password_verify($hash, $user['password']);
+
+		// 	//If $validPassword is TRUE, the login has been successful.
+		// 	if($validPassword){
+		// 		//Provide the user with a login session.
+		// 		$_SESSION['user_id'] = $user['id'];
+		// 		$_SESSION['logged_in'] = time();
+		// 		$_SESSION['username'] = $user['username'];
+				
+		// 		//Redirect to our protected page, which we called home.php
+		// 		header('Location: index.php');
+		// 		exit;
+		// 	}
+		// 	else {
+		// 		//$validPassword was FALSE. Passwords do not match.
+		// 		die('Password failed<br/>Incorrect username / password combination!');
+		// 	}
+		// }
 	}
 }
   
