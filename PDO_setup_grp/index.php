@@ -15,9 +15,11 @@
 <html>
 <head>
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style_v01.css">
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 </head>
 <body>
+	<?php include("header.php");?>
 	<div class="header">
 		<h2>Home Page</h2>
 	</div>
@@ -62,5 +64,23 @@
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 		<?php endif ?>
 	</div>
+	<!--  -->
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close">&times;</span>
+			<h2>Modal Header</h2>
+		</div>
+		<div class="modal-body">
+			<p>Some text in the Modal Body</p>
+			<p>Some other text...</p>
+		</div>
+		<div class="modal-footer">
+			<h3>Modal Footer</h3>
+		</div>
+	</div>
+	<!--  -->
+	<?php include("footer.php");?>
+
 </body>
 </html>
