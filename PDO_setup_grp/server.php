@@ -42,11 +42,10 @@ if (isset($_POST['reg_user'])) {
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
-		// $hash = password_hash($password_1, PASSWORD_BCRYPT, array("cost" => 12));
 		$hash = hash("whirlpool", $password_1);
 		$activation_code = md5(rand());
 
-		$sql = "INSERT INTO users (username, name, surname, email, password, activation_code) VALUES ('$username', '$name', '$surname', '$email', '$password', '$activation_code')";
+		$sql = "INSERT INTO users (username, name, surname, email, password, activation_code) VALUES ('$username', '$name', '$surname', '$email', '$hash', '$activation_code')";
 		$pdo->exec($sql);
 
 		$base_url = "http://localhost:8080/Camagru_repository/PDO_setup_grp/";
@@ -95,69 +94,29 @@ if (isset($_POST['login_user'])) {
 		
 		//Retrieve the user account information for the given username.
 		$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND password = :pass");
-		// $sql = "SELECT id, username, password FROM users WHERE username = :username";
-		// $stmt = $pdo->prepare($sql);
-
-		//Bind value.
-		// $stmt->bindValue(':username', $username);
 
 		//Execute.
 		$stmt->execute(["usr"=>$username, "pass"=>$password]);
-		// $stmt->execute();
 
 		//Fetch row.
 		$user = $stmt->fetchAll();
-		// $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (sizeof($user) == 1) {
 			//checking if verified
-			$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :usr AND activated = 'Y'");
+			$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND activated = 'Y'");
 			$stmt->execute(["usr"=>$username]);
 			$user = $stmt->fetchALL();
 			if (sizeof($user) == 1) {
-				$_SESSION['username'] = $user['usr'];
+				$_SESSION['username'] = $username;
 				$_SESSION['success'] = "You are logged in!";
-				// $_SESSION['logged_in'] = time();
-				echo "Successfully logged in!<br/>";
 			}
 			else
 				$_SESSION['error'] = "Please check your email to verify your account!";
-			echo "Finished call!!<br/>";
 		}
 		else {
-			echo "Failed to get user!<br/>";
+			$_SESSION['error'] = "Failed to get user!";
 		}
-		// header('location: index.php');
-		//If $row is FALSE.
-		// if($user === false) {
-		// 	//Could not find a user with that username!
-		// 	//PS: You might want to handle this error in a more user-friendly manner!
-		// 	die('Username failed<br/>Incorrect username / password combination!');
-		// }
-		// else {
-		// 	//User account found. Check to see if the given password matches the
-		// 	//password hash that we stored in our users table.
-			
-		// 	//Compare the passwords.
-		// 	// $hash = hash("whirlpool", $password);
-		// 	$validPassword = password_verify($hash, $user['password']);
-
-		// 	//If $validPassword is TRUE, the login has been successful.
-		// 	if($validPassword){
-		// 		//Provide the user with a login session.
-		// 		$_SESSION['user_id'] = $user['id'];
-		// 		$_SESSION['logged_in'] = time();
-		// 		$_SESSION['username'] = $user['username'];
-				
-		// 		//Redirect to our protected page, which we called home.php
-		// 		header('Location: index.php');
-		// 		exit;
-		// 	}
-		// 	else {
-		// 		//$validPassword was FALSE. Passwords do not match.
-		// 		die('Password failed<br/>Incorrect username / password combination!');
-		// 	}
-		// }
+		header('location: index.php');
 	}
 }
   
