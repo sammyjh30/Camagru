@@ -70,12 +70,13 @@ if (isset($_POST['reg_user'])) {
 			else
 				echo "email sent<br/>";
 			$_SESSION['message'] = "Check your email for the Activation Link.";
-			header('Location: index.php');
 		}
 		else {
 			$error="Something went wrong.Please try again";
 			$_SESSION['error'] = $error;
 		}
+		unset($_SESSION['window']);
+		header('Location: index.php');
 	}
 }
 
@@ -116,6 +117,7 @@ if (isset($_POST['login_user'])) {
 		else {
 			$_SESSION['error'] = "Failed to get user!";
 		}
+		unset($_SESSION['window']);
 		header('location: index.php');
 	}
 }
