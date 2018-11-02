@@ -28,6 +28,21 @@ body {
 	line-height: 25px;
 	border-radius: 4px;
 }
+.pageFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	background-color:rgba(0, 0, 0, 0.7);
+	padding: 5px 10px;
+	text-align: center;
+	color: white;
+	height:50px;
+}
+.footerLogo {
+	margin-top: 13px;
+	padding: 10px;
+}
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .pageHeader a.logo {
 	margin-top: 13px;
@@ -60,20 +75,20 @@ body {
 .header {
 	width: 30%;
 	margin: 50px auto 0px;
-	color: white;
-	background: #5F9EA0;
+	color: black;
 	text-align: center;
-	border: 1px solid #B0C4DE;
 	border-bottom: none;
 	border-radius: 10ox 10px 0px 0px;
 	padding: 20px;
 }
 form, .content {
-	width: 50%;
+	width: 80%;
 	margin: 0px auto;
 	padding: 20px;
-	border: 1px solid #B0C4DE;
-	background: white;
+	/* border: 1px solid #B0C4DE; */
+	/* background: white; */
+	background-color:rgba(255, 255, 255, 0.2);
+
 	/* border-radius: 0px 0px 10px 10px; */
 }
 .input-group {
@@ -96,7 +111,7 @@ form, .content {
 	padding: 10px;
 	font-size: 15px;
 	color: white;
-	background: #5F9EA0;
+	background-color:rgba(0, 0, 0, 0.5);
 	border: none;
 	border-radius: 5px;
 }
@@ -117,13 +132,25 @@ form, .content {
 	margin-bottom: 20px;
 }
 .coverPage {
-	/* text-align: center; */
-	/* align-content: center; */
+	text-align: center;
+	align-content: center;
 	padding: 5%;
-	font-size: 56px;
-    line-height: 56px;
+	font-size: 4vw;
+    line-height: 5vw;
     font-weight: 600;
 }
+@media screen and (max-width: 500px) {
+	.coverPage {
+		font-size: 25px;
+		line-height: 30px;
+	}
+}
+@media screen and (min-width: 1200px) {
+	.coverPage {
+	  font-size: 48px;
+	  line-height: 60px;
+	}
+  }
   /*  */
 /* Modal Header */
 .modal-header {

@@ -1,7 +1,13 @@
 <div class="pageHeader">
-	<a href="#default" class="logo">
-		<img src="../img/logo_white.png" alt="logo" style="width:auto; height:40px; padding-bottom:10px;">
-	</a>
+	<?php if (isset($_SESSION['username'])) : ?>
+		<a href="index.php" class="logo">
+			<img src="../img/logo_white.png" alt="logo" style="width:auto; height:40px; padding-bottom:10px;">
+		</a>
+	<?php else : ?>
+		<a href="index.php?logout='1'" class="logo">
+			<img src="../img/logo_white.png" alt="logo" style="width:auto; height:40px; padding-bottom:10px;">
+		</a>
+	<?php endif ?>	
 	<div class="header-right">
 	<?php if (isset($_SESSION['username'])) : ?>
 		<a href="index.php?profile='1'"><strong><?php echo $_SESSION['username']; ?></strong></a>
