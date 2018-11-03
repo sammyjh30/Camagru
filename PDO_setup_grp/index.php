@@ -78,9 +78,7 @@
 				<div class="coverPage">
 					<p><strong>Join the fun!</strong></p>
 					<a class="btn" href="index.php?signup='1'">Signup</a>
-					<br/>
-					<br/>
-					<br/>
+					<br/><br/><br/>
 					<p><strong>Already a member?</strong></p>
 					<a class="btn" href="index.php?login='1'">Login</a>
 				</div>
