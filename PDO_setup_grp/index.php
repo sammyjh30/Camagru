@@ -67,7 +67,7 @@
 			<?php include("profile.php");?>
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "camera") : ?>
-			<?php unset($_SESSION['error']); ?>
+			<?php unset($_SESSION['window']); ?>
 			<?php include("camera.php");?>		
 		<?php else : ?>
 			<?php  if (isset($_SESSION['username'])) : ?>
