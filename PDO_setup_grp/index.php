@@ -3,12 +3,10 @@
 
     if (!isset($_SESSION['username'])) {
         $_SESSION['message'] = "You must log in first";
-        // header('location: index.php');
     }
     if (isset($_GET['logout'])) {
         session_destroy();
         unset($_SESSION['username']);
-        // header("location: index.php");
     }
     if (isset($_GET['login'])) {
         $_SESSION['window'] = "login";
@@ -18,6 +16,9 @@
     }
     if (isset($_GET['profile'])) {
         $_SESSION['window'] = "profile";
+	}
+	if (isset($_GET['camera'])) {
+        $_SESSION['window'] = "camera";
     }
 ?>
 <?php include('server.php') ?>
@@ -25,7 +26,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v02.css">
+    <link rel="stylesheet" type="text/css" href="style_v03.css">
 </head>
 <body>
     <?php include("header.php");?>
@@ -33,22 +34,18 @@
         <!-- notification message -->
         <?php if (isset($_SESSION['success'])) : ?>
         <div class="error success" >
-            <h3>
-            <?php
+			<h3><?php
                 echo $_SESSION['success'];
                 unset($_SESSION['success']);
-            ?>
-            </h3>
+            ?></h3>
         </div>
         <?php endif ?>
         <?php if (isset($_SESSION['message'])) : ?>
         <div class="error success" >
-            <h3>
-            <?php
+            <h3><?php
                 echo $_SESSION['message'];
                 unset($_SESSION['message']);
-            ?>
-            </h3>
+            ?></h3>
         </div>
         <?php endif ?>
         <?php if (isset($_SESSION['error'])) : ?>
@@ -69,6 +66,9 @@
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "profile") : ?>
 			<?php include("profile.php");?>
 			<?php unset($_SESSION['window']); ?>
+		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "camera") : ?>
+			<?php unset($_SESSION['error']); ?>
+			<?php include("camera.php");?>		
 		<?php else : ?>
 			<?php  if (isset($_SESSION['username'])) : ?>
 				<p><strong>Welcome!</strong></p>
