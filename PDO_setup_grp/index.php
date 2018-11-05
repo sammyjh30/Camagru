@@ -26,7 +26,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v03.css">
+    <link rel="stylesheet" type="text/css" href="style_v04.css">
 </head>
 <body>
     <?php include("header.php");?>
@@ -85,6 +85,9 @@
 			<?php endif ?>
 		<?php endif ?>
     </div>
+	<div id="container2" class="container2">
+	<img class="snapshot">
+	</div>
     <!--  -->
     <!-- Modal content -->
     <!-- <div class="modal-content">

@@ -192,15 +192,18 @@ form, .content {
 } */
 
 #container {
-    margin: 0px auto;
-    width: 500px;
-    height: 375px;
-    border: 10px #333 solid;
+    margin: 0px auto 0px auto;
+    height: 50%;
+    width: auto;
+	border: 10px #333 solid;
+	/* padding: 0px 5px 0px 5px; */
 }
 #videoElement {
-    width: 500px;
-    height: 375px;
-    background-color: #666;
+    height: 50%;
+    width: auto;
+	background-color: #666;
+	text-align: center;
+	align-content: center;
 }
 
 .container2 {
@@ -210,4 +213,6 @@ form, .content {
 	/* border: 1px solid #B0C4DE; */
 	/* background: white; */
 	background-color:rgba(255, 255, 255, 0.2);
+	text-align: center;
+	align-content: center;
 }

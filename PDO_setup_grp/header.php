@@ -1,7 +1,7 @@
-<div class="pageHeader">
+<div class="pageHeader" id="pageHeader">
 	<?php if (isset($_SESSION['username'])) : ?>
 		<a href="index.php" class="logo">
-			<img src="../img/logo_white.png" alt="logo" style="width:auto; height:40px; padding-bottom:10px;">
+			<img src="../img/logo_white.png" class="logo" alt="logo" style="width:auto; height:40px; padding-bottom:10px;">
 		</a>
 	<?php else : ?>
 		<a href="index.php?logout='1'" class="logo">
