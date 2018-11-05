@@ -202,7 +202,7 @@ form, .content {
 }
 #videoElement {
     height: auto;
-    width: 50%;
+    width: 60%;
 	background-color: #666;
 	text-align: center;
 	align-content: center;
@@ -210,12 +210,12 @@ form, .content {
 }
 
 .container2 {
-	width: 80%;
+	width: 50%;
 	margin: 0px auto;
-	padding: 20px;
+	/* padding: 20px; */
 	/* border: 1px solid #B0C4DE; */
 	/* background: white; */
-	background-color:rgba(255, 255, 255, 0.2);
+	/* background-color:rgba(255, 255, 255, 0.2); */
 	text-align: center;
 	align-content: center;
 }

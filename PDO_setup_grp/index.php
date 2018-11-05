@@ -84,7 +84,9 @@
 				</div>
 			<?php endif ?>
 		<?php endif ?>
-    </div>
+	</div>
+	<br/>
+	<br/>
 	<div id="container2" class="container2">
 	<img class="snapshot">
 	</div>
