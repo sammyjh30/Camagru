@@ -192,18 +192,21 @@ form, .content {
 } */
 
 #container {
-    margin: 0px auto 0px auto;
-    height: 50%;
-    width: auto;
-	border: 10px #333 solid;
+    /* margin: 0px auto 0px auto; */
+    /* height: 50%; */
+    /* width: 50%; */
+	/* border: 10px #333 solid; */
 	/* padding: 0px 5px 0px 5px; */
+	text-align: center;
+	align-content: center;
 }
 #videoElement {
-    height: 50%;
-    width: auto;
+    height: auto;
+    width: 50%;
 	background-color: #666;
 	text-align: center;
 	align-content: center;
+	border: 10px #333 solid;
 }
 
 .container2 {
