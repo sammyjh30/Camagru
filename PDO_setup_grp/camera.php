@@ -32,22 +32,24 @@
 			img.src = canvas.toDataURL('image/png');
 			document.getElementById("container2").innerHTML = "<img src="+img.src+" alt='snapshot' style='border:10px solid rgba(255, 255, 255, 0.2); width:60%; height:auto;'>";
 		}
-		// function savePic(){
-		// 	var hr = new XMLHttpRequest();
-		// 	var url = "server.php";
-		// 	var usr = ' //echo $_SESSION["username"]; ?>';
-		// 	var pic = (encodeURIComponent(JSON.stringify(img.src)));
-		// 	var vars = "username="+usr+"&pic="+pic+"&submit_pic=true";
-		// 	hr.open("POST", url, true);
-		// 	hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		// 	hr.onreadystatechange = function() {
-		// 	if(hr.readyState == 4 && hr.status == 200) {
-		// 		var return_data = hr.responseText;
-		// 		document.getElementById("status").innerHTML = return_data;
-		// 	}
-		// }
-		// hr.send(vars);
-		// document.getElementById("status").innerHTML = "processing...";
-		// }
+		// Save picture
+		function savePic(){
+			var hr = new XMLHttpRequest();
+			var url = "server.php";
+			var usr = '<?php echo $_SESSION["username"]; ?>';
+			//Encodes are URI component, encodes special characters
+			var pic = (encodeURIComponent(JSON.stringify(img.src)));
+			var vars = "username="+usr+"&pic="+pic+"&submit_pic=true";
+			hr.open("POST", url, true);
+			hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			hr.onreadystatechange = function() {
+				if(hr.readyState == 4 && hr.status == 200) {
+					var return_data = hr.responseText;
+					document.getElementById("status").innerHTML = return_data;
+				}
+			}
+			hr.send(vars);
+			document.getElementById("status").innerHTML = "processing...";
+		}
 	</script>
 </div>

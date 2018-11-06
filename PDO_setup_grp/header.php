@@ -6,7 +6,6 @@
 	<?php else : ?>
 		<a href="index.php?logout='1'" class="logo">
 			<img src="../img/logo_white.png" class="logo" alt="logo" style="width: auto; height:40px; padding-bottom:10px;">
-			<!-- <img src="../img/logo_white.png" alt="logo" > -->
 		</a>
 	<?php endif ?>	
 	<div class="header-right">
