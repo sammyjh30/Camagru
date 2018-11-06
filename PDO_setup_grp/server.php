@@ -48,7 +48,7 @@ if (isset($_POST['reg_user'])) {
 		$sql = "INSERT INTO users (username, name, surname, email, password, activation_code) VALUES ('$username', '$name', '$surname', '$email', '$hash', '$activation_code')";
 		$pdo->exec($sql);
 
-		$base_url = "http://localhost:8080/Camagru_repository/PDO_setup_grp/";
+		$base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
 		$lastInsertId = $pdo->lastInsertId();
 		if($lastInsertId) {
 			$msg = "You have signed up Successfully";

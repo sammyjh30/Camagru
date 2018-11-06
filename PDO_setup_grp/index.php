@@ -26,7 +26,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v04.css">
+    <link rel="stylesheet" type="text/css" href="style_v05.css">
 </head>
 <body>
     <?php include("header.php");?>

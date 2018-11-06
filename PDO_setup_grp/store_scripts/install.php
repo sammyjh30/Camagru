@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "Samanthajh30";
+$password = "123456";
 $my_db = "camagru_db";
 
 try {
@@ -31,12 +31,28 @@ try {
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1";
 	
 	$conn->exec($usr);
-    echo "Table users created successfully" . PHP_EOL;
+	echo "Table users created successfully" . PHP_EOL;
+	
+	$sql2 = "CREATE TABLE pictures (
+		pic_id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+		username VARCHAR(255) NOT NULL,
+		pic LONGTEXT NOT NULL,
+		sub_datetime TIMESTAMP
+		)";
+	$conn->exec($sql2);
+	echo "Table pictures created successfully" . PHP_EOL;
+	
+	$sql3 = "CREATE TABLE comments (
+		pic_id INT(11) UNSIGNED NOT NULL,
+		comment VARCHAR(500) NOT NULL,
+		sub_datetime TIMESTAMP
+		)";
+	$conn->exec($sql3);
+	echo "Table comments created successfully" . PHP_EOL;
 }
 catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage() . PHP_EOL;
 }
 $conn = null;
-
 // return ($conn);
 ?>
