@@ -125,11 +125,11 @@ if (isset($_POST['login_user'])) {
 //receiving picture
 if(isset($_POST['submit_pic'])){
     $pic = $_POST['pic'];
-    $username = $_POST['username'];
-    // $conn = new PDO("mysql:host=$servername;dbname=$dbname", $ad_username, $ad_password, $opt);
-    $sql = "INSERT INTO camagru_db.`pictures` (username, pic) 
-    VALUES ('$username','$pic')";
-    $conn->exec($sql);
+	$username = $_POST['username'];
+	echo $pic . PHP_EOL;
+	echo $username . PHP_EOL;
+    $sql = "INSERT INTO camagru_db.pictures (username, pic) VALUES ('$username','$pic')";
+    $pdo->exec($sql);
 }
 
 ?>

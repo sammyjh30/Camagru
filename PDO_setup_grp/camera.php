@@ -10,7 +10,7 @@
 	</div>
 	<br/><br/>
 	<script>
-		var video = document.querySelector("#videoElement");
+		var video = document.querySelector("#videoElement"), canvas;
 		var img = document.querySelector('snapshot') || document.createElement('snapshot');
 		
 		if (navigator.mediaDevices.getUserMedia) {       
@@ -23,15 +23,17 @@
 		function takeSnapshot(){
 			var context;
 			var width = video.offsetWidth, height = video.offsetHeight;
-			var canvas;
+
 			canvas = canvas || document.createElement('canvas');
 			canvas.width = width;
 			canvas.height = height;
+			
 			context = canvas.getContext('2d');
 			context.drawImage(video, 0, 0, width, height);
 			img.src = canvas.toDataURL('image/png');
 			document.getElementById("container2").innerHTML = "<img src="+img.src+" alt='snapshot' style='border:10px solid rgba(255, 255, 255, 0.2); width:60%; height:auto;'>";
 		}
+
 		// Save picture
 		function savePic(){
 			var hr = new XMLHttpRequest();
