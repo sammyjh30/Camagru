@@ -51,11 +51,6 @@ body {
 	height:40px; 
 	padding-bottom:10px;
 }
-/* Change the background color on mouse-over */
-/* .pageHeader a:hover {
-	background-color: #ddd;
-	color: black;
-} */
 
 /* Float the link section to the right */
 .header-right {
@@ -88,11 +83,7 @@ form, .content {
 	width: 80%;
 	margin: 0px auto;
 	padding: 20px;
-	/* border: 1px solid #B0C4DE; */
-	/* background: white; */
 	background-color:rgba(255, 255, 255, 0.2);
-
-	/* border-radius: 0px 0px 10px 10px; */
 }
 .input-group {
 	margin: 10px 0px 10px 0px;
@@ -158,48 +149,48 @@ form, .content {
 /* Modal Header */
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+	background-color:rgba(0, 0, 0, 0.8);
     color: white;
 }
 
-/* Modal Body */
-.modal-body {
-	padding: 2px 16px;
-}
-
-/* Modal Footer */
-.modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-	width: 100%;
-	height: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    animation-name: animatetop;
-    animation-duration: 0.4s
+	margin: auto;
+    width: 60%;
+	/* background-color:rgba(255, 255, 255, 0.2); */
+    /* padding: 4px; */
 }
 
-/* Add Animation */
-/* @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-} */
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
 
 #container {
-    /* margin: 0px auto 0px auto; */
-    /* height: 50%; */
-    /* width: 50%; */
-	/* border: 10px #333 solid; */
-	/* padding: 0px 5px 0px 5px; */
 	text-align: center;
 	align-content: center;
 }
@@ -223,3 +214,11 @@ form, .content {
     padding: 5px;
 }
 
+.upload-font {
+    color: white;
+}
+
+.upload-box {
+    padding: 4px;
+    width: 70%;
+}
