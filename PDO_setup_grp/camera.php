@@ -9,6 +9,26 @@
 		</div>
 	</div>
 	<br/><br/>
+	<div id="container2" class="container2"></div>
+	<!-- <div id="container2" class="container2"> -->
+	<!-- <img class="snapshot"> -->
+	<!-- </div> -->
+	 <!-- Modal content -->
+    <div id= "modal-content" class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Modal Header</h2>
+        </div>
+        <div class="modal-body">
+            <p>Some text in the Modal Body</p>
+            <p>Some other text...</p>
+			<img name="image" src="" id='modal-img'>
+        </div>
+        <div class="modal-footer">
+            <h3>Modal Footer</h3>
+			<button onclick="savePic()" class="btn">Save</button> 
+        </div>
+    </div>
 	<script>
 		var video = document.querySelector("#videoElement"), canvas;
 		var img = document.querySelector('snapshot') || document.createElement('snapshot');
@@ -21,6 +41,7 @@
 			})
 		}
 		function takeSnapshot(){
+			var new_img = document.createElement("img");
 			var context;
 			var width = video.offsetWidth, height = video.offsetHeight;
 
@@ -30,10 +51,22 @@
 			
 			context = canvas.getContext('2d');
 			context.drawImage(video, 0, 0, width, height);
-			img.src = canvas.toDataURL('image/png');
-			document.getElementById("container2").innerHTML = "<img src="+img.src+" alt='snapshot' style='border:10px solid rgba(255, 255, 255, 0.2); width:60%; height:auto;'>";
+			new_img.src = canvas.toDataURL('image/png');
+
+			new_img.setAttribute("width", "30%");
+			new_img.onclick = function() {
+				save(new_img.src);
+			}
+			container2.insertBefore(new_img, container2.firstChild);
+			// document.getElementById("container2").innerHTML = "<img src="+img.src+">";
+			// document.getElementById("container2").innerHTML = "<img src="+img.src+" alt='snapshot' style='border:10px solid rgba(255, 255, 255, 0.2); width:60%; height:auto;'>";
 		}
 
+		function save(src) {
+			var modal = document.getElementById('modal-content');
+			var img = document.getElementById('modal-img');
+			var span = document.getElementsByClassName("close")[0];
+		}
 		// Save picture
 		function savePic(){
 			var hr = new XMLHttpRequest();
