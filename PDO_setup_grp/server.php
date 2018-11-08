@@ -126,10 +126,10 @@ if (isset($_POST['login_user'])) {
 if(isset($_POST['submit_pic'])){
     $pic = $_POST['pic'];
 	$username = $_POST['username'];
-	echo $pic . PHP_EOL;
-	echo $username . PHP_EOL;
-    $sql = "INSERT INTO camagru_db.pictures (username, pic) VALUES ('$username','$pic')";
-    $pdo->exec($sql);
+	$title = $_POST['title'];
+	$description = $_POST['descrip'];
+    $sql = "INSERT INTO camagru_db.pictures (username, pic, title, description) VALUES ('$username','$pic','$title','$description')";
+	$pdo->exec($sql);
 }
 
 ?>

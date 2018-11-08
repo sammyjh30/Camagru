@@ -26,7 +26,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v06.css">
+    <link rel="stylesheet" type="text/css" href="style_v07.css">
 </head>
 <body>
     <?php include("header.php");?>
@@ -74,7 +74,6 @@
 				<p><strong>Welcome!</strong></p>
 				<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 			<?php else : ?>
-				<!-- <div> -->
 				<div class="coverPage">
 					<p><strong>Join the fun!</strong></p>
 					<a class="btn" href="index.php?signup='1'">Signup</a>

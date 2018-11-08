@@ -27,5 +27,5 @@ else
 	$error = "Problem Authenticating";
 	$_SESSION['error'] = $error;
 }
-header('Location: index.php');
+header("Location: index.php?login='1'");
 ?>
