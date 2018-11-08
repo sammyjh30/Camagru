@@ -4,7 +4,8 @@
 		</video>
 		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 			<div id="status"></div>
-			<button onclick="takeSnapshot()" class="btn">Take pic</button>
+			<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
+			<button onclick="" class="btn">Upload</button>
 		</div>
 	</div>
 	<br/><br/>
