@@ -5,7 +5,7 @@
 		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 			<div id="status"></div>
 			<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
-			<button onclick="" class="btn">Upload</button>
+			<button onclick="upload_picture()" class="btn">Upload!</button>
 		</div>
 	</div>
 	<br/><br/>
@@ -58,6 +58,29 @@
 			container2.insertBefore(new_img, container2.firstChild);
 		}
 
+        function upload_picture() {
+
+            var context;
+            var width = video.offsetWidth, height = video.offsetHeight;
+
+            canvas = canvas || document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+                var img2 = new Image();
+                img2.onload = function () {
+                    canvas.getContext('2d').drawImage(img2,0, 0, width, height);
+                }
+                img2.src = reader.result;
+                document.getElementById("container2").innerHTML = "<img style='width:100%; height:100%;'src="+img2.src+">";
+            };
+            reader.readAsDataURL(file);
+        }
+
 		function save(src) {
 			var modal = document.getElementById('myModal');
 			var img = document.getElementById('modal-img');
@@ -80,6 +103,7 @@
 				}
 			}
 		}
+
 		// Save picture
 		function savePic(){
 			var hr = new XMLHttpRequest();
