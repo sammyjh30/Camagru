@@ -5,7 +5,11 @@
 		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 			<div id="status"></div>
 			<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
-			<button onclick="" class="btn">Upload</button>
+			<br/>
+			<!-- <button onclick="upload_picture()" class="btn">Upload</button> -->
+			<div style="width: 40%; text-align: center; align-content: center; color:white; background-color:rgba(0, 0, 0, 0.7);">
+				<input type="file" value="Upload" onchange="upload_picture(); return false;" />
+			</div>
 		</div>
 	</div>
 	<br/><br/>
@@ -56,6 +60,36 @@
 				save(new_img.src);
 			}
 			container2.insertBefore(new_img, container2.firstChild);
+		}
+
+		function upload_picture() {
+
+			var context;
+			var width = video.offsetWidth, height = video.offsetHeight;
+
+			canvas = canvas || document.createElement('canvas');
+			canvas.width = width;
+			canvas.height = height;
+
+			var file = document.querySelector('input[type=file]').files[0];
+			var reader  = new FileReader();
+
+			reader.onloadend = function () {
+				var img2 = new Image();
+				var new_img = document.createElement("img");
+				var context;
+
+				context = canvas.getContext('2d');
+				context.drawImage(img2, 0, 0, width, height);
+				img2.src = reader.result;
+
+				img2.setAttribute("width", "30%");
+				img2.onclick = function() {
+					save(img2.src);
+				}
+				container2.insertBefore(img2, container2.firstChild);
+			};
+			reader.readAsDataURL(file);
 		}
 
 		function save(src) {
