@@ -1,5 +1,14 @@
 <div>
 	<div id="container">
+		<div>
+			<a href="index.php?logout='1'" class="logo">
+				<img src="../img/moustache.png" class="logo" alt="logo" style="width:  40px; height:auti; padding-bottom:10px;">
+			</a>
+			<br/>
+			<a href="index.php?logout='1'" class="logo">
+				<img src="../img/cat.png" class="logo" alt="logo" style="width: 40px; height:auto; padding-bottom:10px;">
+			</a>
+		</div>
 		<video autoplay="true" id="videoElement">
 		</video>
 		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
