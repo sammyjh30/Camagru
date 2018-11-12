@@ -6,18 +6,14 @@
 					<tr style="width:100%; height:100%;">
 						<br/>
 						<div class="myButton">
-							<a href="index.php?logout='1'" class="logo">
-								<img src="../img/moustache.png" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
-							</a>
+							<input type="image" src="../img/moustache.png" onclick="overlay(0)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
 						</div>
 						<br/>
 					</tr>
 					<tr>
 						<br/>
 						<div class="myButton">
-							<a href="index.php?logout='1'" class="logo">
-								<img src="../img/cat.png" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
-							</a>
+							<input type="image" src="../img/cat.png" onclick="overlay(1)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
 						</div>
 						<br/>
 					</tr>
@@ -27,11 +23,7 @@
 			<div class="column-right">
 				<div style="position: relative; left: 0; top: 0;">
 					<video autoplay="true" id="videoElement" style="position:relative; top:0; left:0;"></video>
-					<?php if (isset($_SESSION['success'])) : ?>
-						<img src="../img/cat.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
-					<?php else : ?>
-						<img src="../img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
-					<?php endif ?>
+					<img src="../img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
 				</div>				
 				<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 					<div id="status"></div>
@@ -177,6 +169,18 @@
 			}
 			hr.send(vars);
 			document.getElementById("status").innerHTML = "processing...";
+		}
+
+		function overlay(num) {
+			var img = document.getElementById('filter');
+			if (num == 1) {
+				//cat ears
+				img.src = "../img/cat.png";
+			}
+			else {
+				//moustache
+				img.src = "../img/moustache.png";
+			}
 		}
 	</script>
 </div>
