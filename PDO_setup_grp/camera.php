@@ -176,6 +176,8 @@
 			if (num == 1) {
 				//cat ears
 				img.src = "../img/cat.png";
+				img.setAttribute("width", "100%");
+				// img.setAttribute("width", "100%");
 			}
 			else {
 				//moustache
