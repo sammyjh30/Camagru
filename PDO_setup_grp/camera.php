@@ -25,7 +25,14 @@
 				<br/>
 			</div>
 			<div class="column-right">
-				<video autoplay="true" id="videoElement"></video>
+				<div style="position: relative; left: 0; top: 0;">
+					<video autoplay="true" id="videoElement" style="position:relative; top:0; left:0;"></video>
+					<?php if (isset($_SESSION['success'])) : ?>
+						<img src="../img/cat.png" style="position: absolute; top: 10%; left: 25%;  width: 50%;"/>
+					<?php else : ?>
+						<img src="../img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
+					<?php endif ?>
+				</div>				
 				<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 					<div id="status"></div>
 					<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
@@ -59,6 +66,7 @@
 	</div>
 	<script>
 		var video = document.querySelector("#videoElement"), canvas;
+		var filter = document.getElementById('filter');
 		var img = document.querySelector('snapshot') || document.createElement('snapshot');
 		
 		if (navigator.mediaDevices.getUserMedia) {       
@@ -72,13 +80,17 @@
 			var new_img = document.createElement("img");
 			var context;
 			var width = video.offsetWidth, height = video.offsetHeight;
+			var f_width = filter.offsetWidth, f_height = filter.offsetHeight;
+			var fx = width/100 * 40 , fy = height/100 * 60;
 
 			canvas = canvas || document.createElement('canvas');
 			canvas.width = width;
 			canvas.height = height;
 			
 			context = canvas.getContext('2d');
+			context.globalAlpha = 1.0;
 			context.drawImage(video, 0, 0, width, height);
+			context.drawImage(filter, fx, fy, f_width, f_height);
 			new_img.src = canvas.toDataURL('image/png');
 
 			new_img.setAttribute("width", "30%");
