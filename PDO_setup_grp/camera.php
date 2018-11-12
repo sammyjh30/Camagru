@@ -1,24 +1,41 @@
 <div>
 	<div id="container">
-		<div>
-			<a href="index.php?logout='1'" class="logo">
-				<img src="../img/moustache.png" class="logo" alt="logo" style="width:  40px; height:auti; padding-bottom:10px;">
-			</a>
-			<br/>
-			<a href="index.php?logout='1'" class="logo">
-				<img src="../img/cat.png" class="logo" alt="logo" style="width: 40px; height:auto; padding-bottom:10px;">
-			</a>
-		</div>
-		<video autoplay="true" id="videoElement">
-		</video>
-		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
-			<div id="status"></div>
-			<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
-			<br/>
-			<!-- <button onclick="upload_picture()" class="btn">Upload</button> -->
-			<div style="width: 40%; text-align: center; align-content: center; color:white; background-color:rgba(0, 0, 0, 0.7);">
-				<input type="file" value="Upload" onchange="upload_picture(); return false;" />
+		<div class="row">
+			<div class="column-left">
+				<table style="width:100%">
+					<tr style="width:100%; height:100%;">
+						<br/>
+						<div class="myButton">
+							<a href="index.php?logout='1'" class="logo">
+								<img src="../img/moustache.png" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+							</a>
+						</div>
+						<br/>
+					</tr>
+					<tr>
+						<br/>
+						<div class="myButton">
+							<a href="index.php?logout='1'" class="logo">
+								<img src="../img/cat.png" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+							</a>
+						</div>
+						<br/>
+					</tr>
+				</table>
+				<br/>
 			</div>
+			<div class="column-right">
+				<video autoplay="true" id="videoElement"></video>
+				<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
+					<div id="status"></div>
+					<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
+					<br/>
+					<div style="margin: auto; width: 40%; text-align: center; align-content: center; color:white; background-color:rgba(0, 0, 0, 0.7);">
+						<input type="file" value="Upload" onchange="upload_picture(); return false;" />
+					</div>
+				</div>
+			</div>
+			<div class="column-left"><br/></div>
 		</div>
 	</div>
 	<br/><br/>

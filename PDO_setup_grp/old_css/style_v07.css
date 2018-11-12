@@ -1,0 +1,237 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	font-size: 120%;
+	font-family: sans-serif;
+	/* background: rgb(164, 191, 209); */
+	background: url(../img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+.pageHeader {
+	overflow: hidden;
+	/* background-color: #f1f1f1; */
+	background-color:rgba(0, 0, 0, 0.5);
+	padding: 5px 10px;
+}
+/* Style the header links */
+.pageHeader a {
+	float: left;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 18px; 
+	line-height: 25px;
+	border-radius: 4px;
+}
+.pageFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	background-color:rgba(0, 0, 0, 0.7);
+	padding: 5px 10px;
+	text-align: center;
+	color: white;
+	height:50px;
+}
+.footerLogo {
+	margin-top: 13px;
+	margin: 15px 10% 0px 10%;
+}
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.pageHeader a.logo {
+	margin-top: 13px;
+	padding: 0px;
+	width: auto; 
+	height:40px; 
+	padding-bottom:10px;
+}
+
+/* Float the link section to the right */
+.header-right {
+	float: right;
+	margin-top: 12px;
+}
+  
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */ 
+@media screen and (max-width: 500px) {
+	.pageHeader a {
+	  float: none;
+	  display: block;
+	  text-align: left;
+	}
+	.header-right {
+	  float: none;
+	}
+}
+
+.header {
+	width: 30%;
+	margin: 50px auto 0px;
+	color: black;
+	text-align: center;
+	border-bottom: none;
+	border-radius: 10ox 10px 0px 0px;
+	padding: 20px;
+}
+form, .content {
+	width: 80%;
+	margin: 0px auto;
+	padding: 20px;
+	background-color:rgba(255, 255, 255, 0.2);
+}
+.input-group {
+	margin: 10px 0px 10px 0px;
+}
+.input-group label {
+	display: block;
+	text-align: left;
+	margin: 3px;
+}
+.input-group input {
+	height: 30px;
+	width: 93%;
+	padding: 5px 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+.btn {
+	padding: 10px;
+	font-size: 15px;
+	color: white;
+	background-color:rgba(0, 0, 0, 0.5);
+	border: none;
+	border-radius: 5px;
+}
+.error {
+	width: 92%; 
+	margin: 0px auto; 
+	padding: 10px; 
+	border: 1px solid #a94442; 
+	color: #a94442; 
+	background: #f2dede; 
+	border-radius: 5px; 
+	text-align: left;
+}
+.success {
+	color: #3c763d; 
+	background: #dff0d8; 
+	border: 1px solid #3c763d;
+	margin-bottom: 20px;
+}
+.coverPage {
+	text-align: center;
+	align-content: center;
+	padding: 5%;
+	font-size: 4vw;
+    line-height: 5vw;
+    font-weight: 600;
+}
+@media screen and (max-width: 500px) {
+	.coverPage {
+		font-size: 25px;
+		line-height: 30px;
+	}
+}
+@media screen and (min-width: 1200px) {
+	.coverPage {
+	  font-size: 48px;
+	  line-height: 60px;
+	}
+  }
+  /*  */
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+	background-color:rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 50px; /* Location of the box */
+	padding-bottom: 50px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	margin: auto;
+    width: 40%;
+	/* background-color:rgba(255, 255, 255, 0.2); */
+    /* padding: 4px; */
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#container {
+	text-align: center;
+	align-content: center;
+}
+#videoElement {
+    height: auto;
+    width: 60%;
+	background-color: #666;
+	text-align: center;
+	align-content: center;
+	border: 10px #333 solid;
+}
+
+.container2 {
+	width: 40%;
+	height: 100px;
+	margin: 0px auto;
+	overflow: auto;
+	text-align: center;
+	align-content: center;
+    background: rgba(255, 255, 255, 0.2); 
+    padding: 5px;
+}
+
+.upload-font {
+    color: white;
+}
+
+.upload-box {
+    padding: 4px;
+    width: 70%;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
