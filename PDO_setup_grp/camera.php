@@ -1,11 +1,24 @@
 <div>
 	<div id="container">
+		<div>
+			<a href="index.php?logout='1'" class="logo">
+				<img src="../img/moustache.png" class="logo" alt="logo" style="width:  40px; height:auti; padding-bottom:10px;">
+			</a>
+			<br/>
+			<a href="index.php?logout='1'" class="logo">
+				<img src="../img/cat.png" class="logo" alt="logo" style="width: 40px; height:auto; padding-bottom:10px;">
+			</a>
+		</div>
 		<video autoplay="true" id="videoElement">
 		</video>
 		<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 			<div id="status"></div>
 			<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
-			<button onclick="upload_picture()" class="btn">Upload!</button>
+			<br/>
+			<!-- <button onclick="upload_picture()" class="btn">Upload</button> -->
+			<div style="width: 40%; text-align: center; align-content: center; color:white; background-color:rgba(0, 0, 0, 0.7);">
+				<input type="file" value="Upload" onchange="upload_picture(); return false;" />
+			</div>
 		</div>
 	</div>
 	<br/><br/>
@@ -58,28 +71,35 @@
 			container2.insertBefore(new_img, container2.firstChild);
 		}
 
-        function upload_picture() {
+		function upload_picture() {
 
-            var context;
-            var width = video.offsetWidth, height = video.offsetHeight;
+			var context;
+			var width = video.offsetWidth, height = video.offsetHeight;
 
-            canvas = canvas || document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
+			canvas = canvas || document.createElement('canvas');
+			canvas.width = width;
+			canvas.height = height;
 
-            var file = document.querySelector('input[type=file]').files[0];
-            var reader  = new FileReader();
+			var file = document.querySelector('input[type=file]').files[0];
+			var reader  = new FileReader();
 
-            reader.onloadend = function () {
-                var img2 = new Image();
-                img2.onload = function () {
-                    canvas.getContext('2d').drawImage(img2,0, 0, width, height);
-                }
-                img2.src = reader.result;
-                document.getElementById("container2").innerHTML = "<img style='width:100%; height:100%;'src="+img2.src+">";
-            };
-            reader.readAsDataURL(file);
-        }
+			reader.onloadend = function () {
+				var img2 = new Image();
+				var new_img = document.createElement("img");
+				var context;
+
+				context = canvas.getContext('2d');
+				context.drawImage(img2, 0, 0, width, height);
+				img2.src = reader.result;
+
+				img2.setAttribute("width", "30%");
+				img2.onclick = function() {
+					save(img2.src);
+				}
+				container2.insertBefore(img2, container2.firstChild);
+			};
+			reader.readAsDataURL(file);
+		}
 
 		function save(src) {
 			var modal = document.getElementById('myModal');
