@@ -28,7 +28,7 @@
 				<div style="position: relative; left: 0; top: 0;">
 					<video autoplay="true" id="videoElement" style="position:relative; top:0; left:0;"></video>
 					<?php if (isset($_SESSION['success'])) : ?>
-						<img src="../img/cat.png" style="position: absolute; top: 10%; left: 25%;  width: 50%;"/>
+						<img src="../img/cat.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
 					<?php else : ?>
 						<img src="../img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
 					<?php endif ?>
