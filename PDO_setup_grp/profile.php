@@ -12,11 +12,9 @@
                 $images="SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime";
                 $stmt = $pdo->prepare($images);
                 $stmt->execute();
-                // echo $stmt;
-                error_log($stmt->fetch()['pic']);
-                // while ($row = $stmt->fetch()) {
-                //     echo('<img src ='.$row['pic'].'/>');
-                // }
+                while ($row = $stmt->fetch()) {
+                    echo('<img src ='.$row['pic'].'/>');
+                }
                 ?>
             </div>
 		</div>
