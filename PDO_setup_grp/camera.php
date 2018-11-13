@@ -46,6 +46,27 @@
 				<div class="modal-header">
 					<h2>Upload<span class="close">&times;</span></h2>
 				</div>
+				<div class="row">
+					<div class="column-left">
+						<table style="width:100%">
+							<tr style="width:100%; height:100%;">
+								<br/>
+								<div class="myButton">
+									<input type="image" src="../img/frame.png" onclick="addFrame()" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+								</div>
+								<br/>
+							</tr>
+						</table>
+						<br/>
+					</div>
+					<div class="column-right">
+						<div style="position: relative; left: 0; top: 0;">
+							<img name="image" src="" id='modal-img'>
+							<img src="" id="frame" style="position: absolute; top: 1%; left: 12%; width: 75%;"/>
+						</div>				
+					</div>
+					<div class="column-left"><br/></div>
+				</div>
 				<img name="image" src="" id='modal-img'>
 				<p class="upload-font">Title: <input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="title" id="title"></p>
 				<textarea hidden name="base64" id="base64"></textarea>
@@ -59,8 +80,12 @@
 	<script>
 		var video = document.querySelector("#videoElement"), canvas;
 		var filter = document.getElementById('filter');
+		var frame = document.getElementById('frame');
 		var img = document.querySelector('snapshot') || document.createElement('snapshot');
-		
+		var fx = 0;
+		var fy = 0;
+		var frm = 0;
+
 		if (navigator.mediaDevices.getUserMedia) {       
 			navigator.mediaDevices.getUserMedia({video: true})
 			.then(function(stream) {
@@ -73,7 +98,13 @@
 			var context;
 			var width = video.offsetWidth, height = video.offsetHeight;
 			var f_width = filter.offsetWidth, f_height = filter.offsetHeight;
-			var fx = width/100 * 40 , fy = height/100 * 60;
+			// var fx = width/100 * 40 , fy = height/100 * 60;
+
+			if (f_width == 0) { f_width = filter.offsetWidth; }
+			if (f_height == 0) { f_height = filter.offsetHeight; }
+			if (fx == 0) { fx = width/100 * 40; }
+			if (fy == 0) { fy = height/100 * 60; }
+			
 
 			canvas = canvas || document.createElement('canvas');
 			canvas.width = width;
@@ -152,13 +183,30 @@
 			var usr = '<?php echo $_SESSION["username"]; ?>';
 
 			var img = document.getElementById("modal-img");
-			img.src = document.getElementById("modal-img").src;
+			// img.src = document.getElementById("modal-img").src;
+			var new_img = document.createElement("img");
+			var context;
+			var img_width = img.offsetWidth, img_height = img.offsetHeight;
+			var frame_width = frame.offsetWidth;
+			var frame_height = frame.offsetHeight;
+			// var fx = width/100 * 40 , fy = height/100 * 60;				
+
+			canvas = canvas || document.createElement('canvas');
+			canvas.width = img_width;
+			canvas.height = img_height;
+			
+			context = canvas.getContext('2d');
+			context.globalAlpha = 1.0;
+			context.drawImage(img, 0, 0, img_width, img_height);
+			context.drawImage(frame, (img_width/100 * 12), (img_height/100 * 1), frame_width, frame_height);
+			new_img.src = canvas.toDataURL('image/png');
 
 			var title = document.getElementById("title").value;
 			var descrip = document.getElementById("description").value;
 			//Encodes are URI component, encodes special characters
-			var pic = (encodeURIComponent(JSON.stringify(img.src)));
+			var pic = (encodeURIComponent(JSON.stringify(new_img.src)));
 			var vars = "username="+usr+"&pic="+pic+"&title="+title+"&descrip="+descrip+"&submit_pic=true";
+			//when changing username, change it in saved image too
 			hr.open("POST", url, true);
 			hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			hr.onreadystatechange = function() {
@@ -176,12 +224,32 @@
 			if (num == 1) {
 				//cat ears
 				img.src = "../img/cat.png";
-				img.setAttribute("width", "100%");
-				// img.setAttribute("width", "100%");
+				img.style.width = '40%';
+				img.style.top = '20%';
+				img.style.left = '30%';
+				fx = video.offsetWidth/100 * 29;
+				fy = video.offsetHeight/100 * 20;
 			}
 			else {
 				//moustache
 				img.src = "../img/moustache.png";
+				img.style.width = '25%';
+				img.style.top = '60%';
+				img.style.left = '40%';
+				fx = video.offsetWidth/100 * 40;
+				fy = video.offsetHeight/100 * 60;
+			}
+		}
+
+		function addFrame() {
+			//
+			if (frm == 0) {
+				frm = 1;
+				frame.src = "../img/frame.png";
+			}
+			else {
+				frm = 0;
+				frame.src = "";
 			}
 		}
 	</script>
