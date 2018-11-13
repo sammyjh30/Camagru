@@ -2,7 +2,7 @@
 <div>
 	<div id="container">
 		<div class="row">
-			<div class="column">
+			<!-- <div class="column"> -->
                 <?php
                 require('connect.php');
 
@@ -13,10 +13,12 @@
                 $stmt = $pdo->prepare($images);
                 $stmt->execute();
                 while ($row = $stmt->fetch()) {
+                    echo('<div class="column">');
                     echo('<img src ='.$row['pic'].'/>');
+                    echo('</div>');
                 }
                 ?>
-            </div>
+            <!-- </div> -->
 		</div>
 	</div>	
 </div>
