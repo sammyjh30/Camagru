@@ -26,7 +26,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v08.css">
+    <link rel="stylesheet" type="text/css" href="style_v09.css">
 </head>
 <body>
     <?php include("header.php");?>
@@ -64,7 +64,7 @@
 			<?php include("register.php");?>
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "profile") : ?>
-			<?php include("profile.php");?>
+            <?php include("profile.php");?>
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "camera") : ?>
 			<?php unset($_SESSION['window']); ?>

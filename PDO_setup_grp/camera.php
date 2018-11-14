@@ -183,13 +183,11 @@
 			var usr = '<?php echo $_SESSION["username"]; ?>';
 
 			var img = document.getElementById("modal-img");
-			// img.src = document.getElementById("modal-img").src;
 			var new_img = document.createElement("img");
 			var context;
 			var img_width = img.offsetWidth, img_height = img.offsetHeight;
 			var frame_width = frame.offsetWidth;
 			var frame_height = frame.offsetHeight;
-			// var fx = width/100 * 40 , fy = height/100 * 60;				
 
 			canvas = canvas || document.createElement('canvas');
 			canvas.width = img_width;
