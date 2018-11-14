@@ -98,7 +98,6 @@
 			var context;
 			var width = video.offsetWidth, height = video.offsetHeight;
 			var f_width = filter.offsetWidth, f_height = filter.offsetHeight;
-			// var fx = width/100 * 40 , fy = height/100 * 60;
 
 			if (f_width == 0) { f_width = filter.offsetWidth; }
 			if (f_height == 0) { f_height = filter.offsetHeight; }

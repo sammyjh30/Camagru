@@ -33,15 +33,16 @@
 		} catch (Exception $ex) {
 			echo $ex->getMessage();
 		}
-		if (count($results) > 0) {
-			echo "<div class='row'>";
-			foreach ($results as $res) {
-				echo"<div class='column'>";
-				echo"<img src =".$res['pic']." style='width:90%;'/>";
-				echo"</div>";
-				// echo '<h3>' . $res['countries_name'] . '</h3>';
-			}
-			echo "</div>";
-			echo "<br/>";
-		}
+
+		$array_encode = json_encode($gyvuliu_array);
+		// if (count($results) > 0) {
+		// 	echo "<div class='row'>";
+		// 	foreach ($results as $res) {
+		// 		echo"<div class='column'>";
+		// 		echo"<img src =".$res['pic']." style='width:90%;'/>";
+		// 		echo"</div>";
+		// 	}
+		// 	echo "</div>";
+		// 	echo "<br/>";
+		// }
 	?>

@@ -21,81 +21,46 @@ function checkInfiniteScroll(parentSelector, childSelector) {
   if(pageOffset > lastDivOffset - offsetForNewContent ) {
     for(var i = 0; i < numElementsToAdd; i++) {
       var newDiv = document.createElement("div");
-
-        // var hr = new XMLHttpRequest();
-        // var url = "get_home_images.php";
-        // // type: "GET",
-        // //   async: false,
-        // //   url: "getrecords.php",
-        // //   data: "limit=" + lim + "&offset=" + off,
-        // //   cache: false,
-        //     // var pic = (encodeURIComponent(JSON.stringify(new_img.src)));
-			// var vars = "limit="+numElementsToAdd+"&offset="+offsetForNewContent;
-		// 	//when changing username, change it in saved image too
-			// hr.open("GET", url, true);
-			// hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			// hr.onreadystatechange = function() {
-			// 	if(hr.readyState == 4 && hr.status == 200) {
-			// 		var return_data = hr.responseText;
-			// 		document.getElementById("status").innerHTML = return_data;
-			// 	}
-			// }
-            // hr.send(vars);
-            // var results = <?php //echo $array_encode ?>;
-            // for (var i = 0; i < results.length; i++) {
-                // Stuff you would like to do with this array, access elements using gyvuliai_fermoje[i]
-                // echo"<div class='column'>";
-				// echo"<img src =".results[i]['pic']." style='width:90%;'/>";
-		// 		echo"</div>";
-            // }
-            // canvas = canvas || document.createElement('canvas');
-        // PDO Connection
         <?php
-            // $pdo = new PDO('mysql:host=localhost; dbname=' . $db_name . '; 
-            //     charset=utf8mb4', $db_user, $db_password);  
-            // $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // // Prepared statement with placeholders
-            // $stmt1 = $pdo->prepare("SELECT num FROM tb_zagon_id WHERE status = :status
-            //     AND type = :type AND zagon_id = :zagon_id AND user_id = :usid ORDER BY num");
-
-            // // Binding query result to the $num variable (1 is the first column)
-            // $stmt1->bindColumn(1, $num);
-
-            // Executing query and replacing placeholders with some variables
-            // $stmt1->execute(array(
-            //     ':status' => 1,
-            //     ':type' => $type_zagon,
-            //     ':zagon_id' => $id_kurat,
-            //     ':usid' => $usid
-            // ));
-
-            // // Creating a PHP array
-            // $gyvuliu_array = array();
 
             require('connect.php');
             $limit = 5;
-            // Fetching through the array and inserting query results using $num variable ((int) makes sure a value is an integer)
-            while ($stmt1->fetch(PDO::FETCH_ASSOC)) {
-                $gyvuliu_array[] = (int)$num;
+            $offset = 0;
+            
+            $images="SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT $limit OFFSET $offset";
+
+            try {
+                $stmt = $pdo->prepare($images);
+                $stmt->execute();
+                $results = $stmt->fetchAll();
+            } catch (Exception $ex) {
+                echo $ex->getMessage();
             }
 
-            // Encoding PHP array so we will be able to use it in the JS code
-            $array_encode = json_encode($gyvuliu_array);
-    		$images="SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT $limit OFFSET $offset";
+            if (count($results) > 0) {
+            	$str = "<div class='row'>\n";
+            	foreach ($results as $res) {
+            		$str .= "<div class='column'>\n";
+            		$str .= "<img src =".$res['pic']." style='width:90%;'/>\n";
+            		$str .= "</div>\n";
+            	}
+            	$str .=  "</div>\n";
+            	$str .=  "<br/>\n";
+            }
 
         ?>
-// <script>
-        var gyvuliai_fermoje = <?php echo $array_encode; ?>;
-
-        for (var i = 0; i < gyvuliai_fermoje.length; i++) {
-            // Stuff you would like to do with this array, access elements using gyvuliai_fermoje[i]
-        }
-// </script>
 
 
-      newDiv.innerHTML = "my awesome new div";
+
+        // for (var i = 0; i < results.length; i++) {
+        //     newDiv.innerHTML = results;
+        //     // Stuff you would like to do with this array, access elements using gyvuliai_fermoje[i]
+        // }
+        var string = <?php echo $str ?>
+            console.log(string);
+
+      newDiv.innerHTML = string;
+    //   newDiv.innerHTML = "my awesome new div";
       document.querySelector(parentSelector).appendChild(newDiv);
     }
     checkInfiniteScroll(parentSelector, childSelector);
