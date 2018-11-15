@@ -5,6 +5,7 @@ $servername = "localhost";
 $username = "root";
 $password = "123456";
 $my_db = "camagru_db";
+// global $pdo;
 
 //connecting to Database
 // $pdoOptions = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
