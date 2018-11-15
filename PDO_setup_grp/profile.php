@@ -8,7 +8,7 @@
 <div>
 
 <script type="text/javascript">
-    var offset = <? echo $_SESSION['gallery_offset'] ?>;
+    var offset = "<?php echo $_SESSION['gallery_offset'] ?>";
     document.addEventListener('DOMContentLoaded',function () {
     var elm = document.getElementById('scrollContent');
     elm.addEventListener('scroll',callFuntion);
@@ -23,12 +23,12 @@
         var url = "get_home_images.php";
 
         var limit = 5;
-        var vars = "limit="+limit+"&offset="+offset;
+        var vars = "?&limit="+limit+"&offset="+offset;
 
         hr.open("GET", url, true);
         hr.addEventListener('readystatechange', handleResponse);
         hr.send(vars);
-        <? $_SESSION['gallery_offset'] += 1; ?>;
+        <?php $_SESSION['gallery_offset'] += 1; ?>;
 
         function handleResponse() {
             // "this" refers to the object we called addEventListener on

@@ -2,7 +2,9 @@
 		require('connect.php');
 
 		$limit = (intval($_GET['limit']) != 0 ) ? $_GET['limit'] : 5;
+		echo "Limit = ".$_GET['limit'];
 		$offset = (intval($_GET['offset']) != 0 ) ? $_GET['offset'] : 0;
+		echo "offset = ". $_GET['offset'];
 
 		$images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
 		try {
