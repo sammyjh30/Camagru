@@ -2,12 +2,14 @@
   <h3>Infinite Scroll Example</h3>
   <div id="scrollContent" style="overflow-y: scroll; height: 500px; width: 100%">
     <div style="height: 500px; background-color: red">
+    <p id="responseContainer"></p>
     </div>
   <div>
 <div>
 
 <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded',function () {
+    var offset = <? echo $_SESSION['gallery_offset'] ?>;
+    document.addEventListener('DOMContentLoaded',function () {
     var elm = document.getElementById('scrollContent');
     elm.addEventListener('scroll',callFuntion);
 
@@ -17,47 +19,44 @@
       var clientHeight = elm.clientHeight;
 
       if(scrollHeight-scrollTop == clientHeight){
-        <?php
-            require('connect.php');
-            $limit = 5;
-            global $offset;
-            if(empty($offset)){
-                $offset = 0;
-                // echo 'This line is printed, because the $var2 is empty.';
-            }
-            $start = $offset * $limit;
-            // $images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
-            $images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT $start, $limit ";
-            try {
-                $stmt = $pdo->prepare($images);
-                $stmt->execute();
-                $results = $stmt->fetchAll();
-            } catch (Exception $ex) {
-                echo $ex->getMessage();
-            }
-            $offset++;
-            $off = $offset;
-            echo "var off = $off;";
+        var hr = new XMLHttpRequest();
+        var url = "get_home_images.php";
 
-            // $str = (count($results));
-            if (count($results) > 0) {
-                $str = '\'<div class="row">';
-                foreach ($results as $res) {
-                    $src = $res['pic'];
-                    $str .= '<div class="column">';
-                    $str .= '<img src = ';
-                    $str .= $src;
-                    $str .= ' style="width:90%;"/>';
-                    $str .= '</div>';
-                }
-                $str .=  '</div>';
-                $str .=  '<br/>\'';
+        var limit = 5;
+        var vars = "limit="+limit+"&offset="+offset;
+
+        hr.open("GET", url, true);
+        hr.addEventListener('readystatechange', handleResponse);
+        hr.send(vars);
+        <? $_SESSION['gallery_offset'] += 1; ?>;
+
+        function handleResponse() {
+            // "this" refers to the object we called addEventListener on
+            var hr = this;
+
+            //Exit this function unless the AJAX request is complete,
+            //and the server has responded.
+            if (hr.readyState != 4)
+                return;
+
+            // If there wasn't an error, run our showResponse function
+            if (hr.status == 200) {
+                var ajaxResponse = hr.responseText;
+
+                showResponse(ajaxResponse);
             }
-            echo "var string = $str;"; 
-        ?>
-        elm.innerHTML += off;
-        elm.innerHTML += string;
-        // elm.innerHTML += '<div style="height: 300px; background-color: blue"> New Element Added </div>' ;
+        }
+
+        function showResponse(ajaxResponse) {
+            var responseContainer = document.querySelector('#scrollContent');
+
+            // Create a new span tag to hold the response
+            var span = document.createElement('span');
+            span.innerHTML = ajaxResponse;
+
+            // Add the new span to the end of responseContainer
+            responseContainer.appendChild(span);
+        }
       }
     }
 
