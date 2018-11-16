@@ -18,17 +18,16 @@
 
 			if (count($results) > 0) {
 				$i = 0;
-				// $str = '<div class="row">';
-				$str = '<div>';
+				$str = '<div>' . PHP_EOL;
 				foreach ($results as $res) {
 					if ($i % 2 == 0) {
-						$str .= '<div class="row">';
+						$str .= '<div class="row">' . PHP_EOL;
 					}
 					$src = $res['pic'];
-					$str .= '<div class="column">';
+					$str .= '<div class="column">' . PHP_EOL;
 					$str .= '<img src = ';
 					$str .= $src;
-					$str .= ' style="width:90%;"/>';
+					$str .= ' onclick="viewImage('.$res['pic_id'].')" id="'.$res['pic_id'].'" style="width:90%;"/>' . PHP_EOL;
 					$str .= '</div>';
 					if ($i % 2 == 0) {
 						$str .= '</div>';
@@ -36,21 +35,42 @@
 					}
 					$i++;
 				}
-				$str .=  '</div>';
-				
-				$str .=  '<br/>';
+				// $str .=  '</div>';
+				// $str .=  '<br/>';
 			}
 			$_SESSION["gallery_offset"] += 1;
 			echo $str;
 		?>
-	<!-- <div class="row">
-		<img src="../img/arrow.gif" alt=”animated” />
-		<h3>Scroll down to see what's happening!<h3>
-		<img src="../img/arrow.gif" alt=”animated” />
-	</div> -->
-	<p id="responseContainer"></p>
+		<p id="responseContainer"></p>
 	</div>
-  <div>
+	<div>
+		<div id="myModal" class="modal">
+			<div class= "modal-content">
+				<div class="form-wrapper">
+					<form action="index.php" method="post" enctype="multipart/form-data">
+						<div class="modal-header">
+							<h2>Upload<span class="close">&times;</span></h2>
+						</div>
+						<div class="row">
+							<div class="column-right">
+								<div style="position: relative; left: 0; top: 0;">
+									<img name="image" src="" id='modal-img'>
+									<img src="" id="frame" style="position: absolute; top: 1%; left: 12%; width: 75%;"/>
+								</div>				
+							</div>
+							<div class="column-left"><br/></div>
+						</div>
+						<img name="image" src="" id='modal-img'>
+						<p class="upload-font">Title: <input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="title" id="title"></p>
+						<textarea hidden name="base64" id="base64"></textarea>
+						<p class="upload-font">Description:  <input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="description" id="description"></p>
+						<br/>
+						<button onclick="savePic()" class="btn">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 <div>
 
 <script type="text/javascript">
@@ -102,6 +122,29 @@
 		}
 
 	});
+
+	function viewImage(id) {
+		var modal = document.getElementById('myModal');
+		var img = document.getElementById('modal-img');
+		var span = document.getElementsByClassName("close")[0];
+
+		img.src = document.getElementById(id).src;
+		img.setAttribute("width", "100%");
+		document.getElementById('base64').value = src;
+		modal.style.display = "block";
+
+		// // When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// // When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	}
 </script>
 
 </html>
