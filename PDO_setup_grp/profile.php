@@ -1,66 +1,61 @@
 <div>
   <h3>Infinite Scroll Example</h3>
   <div id="scrollContent" style="overflow-y: scroll; height: 500px; width: 100%">
-    <div style="height: 500px; background-color: red">
-    <p id="responseContainer"></p>
-    </div>
+	<div style="height: 500px;">
+	<p id="responseContainer"></p>
+	</div>
   <div>
 <div>
 
 <script type="text/javascript">
-    var offset = "<?php echo $_SESSION['gallery_offset'] ?>";
-    document.addEventListener('DOMContentLoaded',function () {
-    var elm = document.getElementById('scrollContent');
-    elm.addEventListener('scroll',callFuntion);
+	document.addEventListener('DOMContentLoaded',function () {
+		var elm = document.getElementById('scrollContent');
+		elm.addEventListener('scroll',callFuntion);
+		function callFuntion(){
+			var scrollHeight = elm.scrollHeight;
+			var scrollTop = elm.scrollTop;
+			var clientHeight = elm.clientHeight;
 
-    function callFuntion(){
-      var scrollHeight = elm.scrollHeight;
-      var scrollTop = elm.scrollTop;
-      var clientHeight = elm.clientHeight;
+			if(scrollHeight-scrollTop == clientHeight){
+				var hr = new XMLHttpRequest();
+				var limit = 5;
+				var url = "get_home_images.php?limit="+limit;
 
-      if(scrollHeight-scrollTop == clientHeight){
-        var hr = new XMLHttpRequest();
-        var url = "get_home_images.php";
+				hr.open("GET", url);
+				hr.addEventListener('readystatechange', handleResponse);
+				hr.send();
 
-        var limit = 5;
-        var vars = "?&limit="+limit+"&offset="+offset;
+				function handleResponse() {
+					// "this" refers to the object we called addEventListener on
+					var hr = this;
 
-        hr.open("GET", url, true);
-        hr.addEventListener('readystatechange', handleResponse);
-        hr.send(vars);
-        <?php $_SESSION['gallery_offset'] += 1; ?>;
+					//Exit this function unless the AJAX request is complete,
+					//and the server has responded.
+					if (hr.readyState != 4)
+						return;
 
-        function handleResponse() {
-            // "this" refers to the object we called addEventListener on
-            var hr = this;
+					// If there wasn't an error, run our showResponse function
+					if (hr.status == 200) {
+						var ajaxResponse = hr.responseText;
 
-            //Exit this function unless the AJAX request is complete,
-            //and the server has responded.
-            if (hr.readyState != 4)
-                return;
+						showResponse(ajaxResponse);
+					}
+				}
 
-            // If there wasn't an error, run our showResponse function
-            if (hr.status == 200) {
-                var ajaxResponse = hr.responseText;
+				function showResponse(ajaxResponse) {
+					var responseContainer = document.querySelector('#scrollContent');
 
-                showResponse(ajaxResponse);
-            }
-        }
+					// Create a new span tag to hold the response
+					var span = document.createElement('span');
+					span.innerHTML = ajaxResponse;
 
-        function showResponse(ajaxResponse) {
-            var responseContainer = document.querySelector('#scrollContent');
+					// Add the new span to the end of responseContainer
+					responseContainer.appendChild(span);
+				}
+			}
+		}
 
-            // Create a new span tag to hold the response
-            var span = document.createElement('span');
-            span.innerHTML = ajaxResponse;
-
-            // Add the new span to the end of responseContainer
-            responseContainer.appendChild(span);
-        }
-      }
-    }
-
-  });
+	});
 </script>
 
 </html>

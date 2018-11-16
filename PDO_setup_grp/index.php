@@ -64,7 +64,7 @@
 			<?php include("register.php");?>
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "profile") : ?>
-			<?php $_SESSION['gallery_offset'] = 0; ?>
+            <?php $_SESSION["gallery_offset"] = 0;?>
             <?php include("profile.php");?>
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "camera") : ?>

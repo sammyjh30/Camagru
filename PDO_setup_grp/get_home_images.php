@@ -1,11 +1,11 @@
 <?php
+		session_start();
+
 		require('connect.php');
 
 		$limit = (intval($_GET['limit']) != 0 ) ? $_GET['limit'] : 5;
-		echo "Limit = ".$_GET['limit'];
-		$offset = (intval($_GET['offset']) != 0 ) ? $_GET['offset'] : 0;
-		echo "offset = ". $_GET['offset'];
-
+		
+		$offset = $_SESSION["gallery_offset"] * $limit;
 		$images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
 		try {
 			$stmt = $pdo->prepare($images);
@@ -14,13 +14,10 @@
 		} catch (Exception $ex) {
 			echo $ex->getMessage();
 		}
-		// $offset++;
-		$off = $offset;
-		echo "var off = $off;";
 
-		// $str = (count($results));
 		if (count($results) > 0) {
-			$str = '\'<div class="row">';
+			// $str = '\'<div class="row">';
+			$str = '<div class="row">';
 			foreach ($results as $res) {
 				$src = $res['pic'];
 				$str .= '<div class="column">';
@@ -30,7 +27,9 @@
 				$str .= '</div>';
 			}
 			$str .=  '</div>';
-			$str .=  '<br/>\'';
+			// $str .=  '<br/>\'';
+			$str .=  '<br/>';
 		}
-		echo "var string = $str;"; 
+		$_SESSION["gallery_offset"] += 1;
+		echo $str;
 	?>
