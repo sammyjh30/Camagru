@@ -245,7 +245,7 @@ form, .content {
 }
 .column {
     float: left;
-    width: 20%;
+    width: 50%;
 }
 
 .myButton {

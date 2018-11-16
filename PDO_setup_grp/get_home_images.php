@@ -16,18 +16,26 @@
 		}
 
 		if (count($results) > 0) {
-			// $str = '\'<div class="row">';
-			$str = '<div class="row">';
+			$i = 0;
+			$str = '<div>';
 			foreach ($results as $res) {
+				if ($i % 2 == 0) {
+					$str .= '<div class="row">';
+				}
 				$src = $res['pic'];
 				$str .= '<div class="column">';
 				$str .= '<img src = ';
 				$str .= $src;
 				$str .= ' style="width:90%;"/>';
 				$str .= '</div>';
+				if ($i % 2 == 0) {
+					$str .= '</div>';
+					$str .=  '<br/>';
+				}
+				$i++;
 			}
 			$str .=  '</div>';
-			// $str .=  '<br/>\'';
+			
 			$str .=  '<br/>';
 		}
 		$_SESSION["gallery_offset"] += 1;
