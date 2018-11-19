@@ -3,6 +3,9 @@
 
     if (!isset($_SESSION['username'])) {
         $_SESSION['message'] = "You must log in first";
+        if (isset($_GET['window'])) {
+            unset($_SESSION['window']);
+        }
     }
     if (isset($_GET['logout'])) {
         session_destroy();
