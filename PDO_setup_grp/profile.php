@@ -4,7 +4,7 @@
 		<?php
 			require('connect.php');
 
-			$limit = 5;
+			$limit = 6;
 			
 			$offset = $_SESSION["gallery_offset"] * $limit;
 			$images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
@@ -27,16 +27,17 @@
 					$str .= '<div class="column">' . PHP_EOL;
 					$str .= '<img src = ';
 					$str .= $src;
-					$str .= ' onclick="viewImage('.$res['pic_id'].')" id="'.$res['pic_id'].'" style="width:90%;"/>' . PHP_EOL;
+					$str .= ' onclick="viewImage('.$res['pic_id'].')" id="';
+					$str .= $res['pic_id'].'" name="'.$res['username'].'" style="width:90%;"/>' . PHP_EOL;
 					$str .= '</div>';
+					$i++;
 					if ($i % 2 == 0) {
 						$str .= '</div>';
 						$str .=  '<br/>';
 					}
-					$i++;
 				}
-				// $str .=  '</div>';
-				// $str .=  '<br/>';
+				$str .=  '</div>';
+				$str .=  '<br/>';
 			}
 			$_SESSION["gallery_offset"] += 1;
 			echo $str;
@@ -46,26 +47,27 @@
 	<div>
 		<div id="myModal" class="modal">
 			<div class= "modal-content">
-				<div class="form-wrapper">
+				<div class="form-wrapper" style="width:80%;">
 					<form action="index.php" method="post" enctype="multipart/form-data">
 						<div class="modal-header">
-							<h2>Upload<span class="close">&times;</span></h2>
-						</div>
-						<div class="row">
-							<div class="column-right">
-								<div style="position: relative; left: 0; top: 0;">
-									<img name="image" src="" id='modal-img'>
-									<img src="" id="frame" style="position: absolute; top: 1%; left: 12%; width: 75%;"/>
-								</div>				
-							</div>
-							<div class="column-left"><br/></div>
+							<h2>
+								<div id="user" style="width:30%; display: inline"></div>
+								<span class="close">&times;</span>
+							</h2>
 						</div>
 						<img name="image" src="" id='modal-img'>
-						<p class="upload-font">Title: <input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="title" id="title"></p>
-						<textarea hidden name="base64" id="base64"></textarea>
-						<p class="upload-font">Description:  <input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="description" id="description"></p>
 						<br/>
-						<button onclick="savePic()" class="btn">Save</button>
+						<div id="likeCount"></div>
+						<div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 3%; display: inline">0</div>
+						<button onclick="likePic()" class="btn">Like</button>
+						<br/>
+						<div id="comment-box" style="background-color:rgb(255, 255, 255); padding: 5%;">
+							<div id="comments"></div>
+							<br/>
+							<textarea hidden name="base64" id="base64"></textarea>
+							<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="description" id="description"></p>
+							<button onclick="commentPic()" class="btn">Comment</button>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -84,7 +86,7 @@
 
 			if(scrollHeight-scrollTop == clientHeight){
 				var hr = new XMLHttpRequest();
-				var limit = 5;
+				var limit = 6;
 				var url = "get_home_images.php?limit="+limit;
 
 				hr.open("GET", url);
@@ -127,12 +129,16 @@
 		var modal = document.getElementById('myModal');
 		var img = document.getElementById('modal-img');
 		var span = document.getElementsByClassName("close")[0];
+		var mod_img = document.getElementById(id);
+		var src = document.getElementById(id).src;
 
-		img.src = document.getElementById(id).src;
+		img.src = src;
 		img.setAttribute("width", "100%");
 		document.getElementById('base64').value = src;
 		modal.style.display = "block";
-
+		
+		document.getElementById('user').innerHTML = mod_img.name;
+		// document.getElementById('user').insertBefore(mod_img.name, container2.firstChild)
 		// // When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
