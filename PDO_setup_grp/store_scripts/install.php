@@ -39,6 +39,7 @@ try {
 		pic LONGTEXT NOT NULL,
 		title VARCHAR(255) NOT NULL,
 		description VARCHAR(255) NOT NULL,
+		likes INT(100) UNSIGNED NOT NULL DEFAULT 0,
 		sub_datetime TIMESTAMP
 		)";
 	$conn->exec($sql2);

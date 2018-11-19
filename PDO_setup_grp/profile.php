@@ -46,12 +46,12 @@
 	</div>
 	<div>
 		<div id="myModal" class="modal">
-			<div class= "modal-content">
-				<div class="form-wrapper" style="width:80%;">
+			<div class= "modal-content" style="height:70%;">
+				<div class="form-wrapper" style="width:100%;">
 					<form action="index.php" method="post" enctype="multipart/form-data">
 						<div class="modal-header">
 							<h2>
-								<div id="user" style="width:30%; display: inline"></div>
+								<div id="user" style="width:30%; display: inline; font-size: 70%;"></div>
 								<span class="close">&times;</span>
 							</h2>
 						</div>
@@ -65,8 +65,8 @@
 							<div id="comments"></div>
 							<br/>
 							<textarea hidden name="base64" id="base64"></textarea>
-							<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="description" id="description"></p>
-							<button onclick="commentPic()" class="btn">Comment</button>
+							<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="comment" id="comment"  style="display: inline"></p>
+							<button onclick="commentPic()" class="btn"  style="display: inline">Comment</button>
 						</div>
 					</form>
 				</div>
@@ -138,17 +138,52 @@
 		modal.style.display = "block";
 		
 		document.getElementById('user').innerHTML = mod_img.name;
-		// document.getElementById('user').insertBefore(mod_img.name, container2.firstChild)
-		// // When the user clicks on <span> (x), close the modal
+
+		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
 		}
 
-		// // When the user clicks anywhere outside of the modal, close it
+		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";
 			}
+		}
+
+		var mod_aj = new XMLHttpRequest();
+		var url = "picture.php?id="+id;
+
+		mod_aj.open("GET", url);
+		mod_aj.addEventListener('readystatechange', handleResponse);
+		mod_aj.send();
+
+		function handleResponse() {
+			// "this" refers to the object we called addEventListener on
+			var mod_aj = this;
+
+			//Exit this function unless the AJAX request is complete,
+			//and the server has responded.
+			if (mod_aj.readyState != 4)
+				return;
+
+			// If there wasn't an error, run our showResponse function
+			if (mod_aj.status == 200) {
+				var ajaxResponse = mod_aj.responseText;
+
+				showResponse(ajaxResponse);
+			}
+		}
+
+		function showResponse(ajaxResponse) {
+			var responseContainer = document.querySelector('#scrollContent');
+
+			// Create a new span tag to hold the response
+			var span = document.createElement('span');
+			span.innerHTML = ajaxResponse;
+
+			// Add the new span to the end of responseContainer
+			responseContainer.appendChild(span);
 		}
 	}
 </script>

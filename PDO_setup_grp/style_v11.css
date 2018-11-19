@@ -102,12 +102,14 @@ form, .content {
 	border: 1px solid gray;
 }
 .btn {
-	padding: 10px;
-	font-size: 15px;
+	padding: 3%;
+	font-size: 70%;
+	/* font-size: 15px; */
 	color: white;
 	background-color:rgba(0, 0, 0, 0.5);
 	border: none;
 	border-radius: 5px;
+	width: 40%;
 }
 .error {
 	width: 92%; 
@@ -271,7 +273,7 @@ form, .content {
 	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:5%;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
 }

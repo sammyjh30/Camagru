@@ -3,7 +3,7 @@
 
     if (!isset($_SESSION['username'])) {
         $_SESSION['message'] = "You must log in first";
-        if (isset($_GET['window'])) {
+        if (isset($_SESSION['window'])) {
             unset($_SESSION['window']);
         }
     }
