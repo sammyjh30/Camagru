@@ -29,7 +29,7 @@
 		<input type="password" name="password_2">
 	</div>
 	<div class="input-group">
-		<button type="submit" class="btn" name="reg_user">Register</button>
+		<button type="submit" class="btn" name="reg_user" style="font-size:90%; padding:1%;">Register</button>
 	</div>
 	<p>
 		Already a member? <a href="index.php?login='1'">Sign in</a>

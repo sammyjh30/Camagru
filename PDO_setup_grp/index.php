@@ -2,9 +2,14 @@
  session_start();
 
     if (!isset($_SESSION['username'])) {
-        $_SESSION['message'] = "You must log in first";
+        if (!isset($_SESSION['message'])) {
+            $_SESSION['message'] = "You must log in first";
+        }
         if (isset($_SESSION['window'])) {
             unset($_SESSION['window']);
+        }
+        if (isset($_GET['profile'])) {
+            unset($_GET['profile']);
         }
     }
     if (isset($_GET['logout'])) {
@@ -79,33 +84,17 @@
 				<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 			<?php else : ?>
 				<div class="coverPage">
-					<p><strong>Join the fun!</strong></p>
-					<a class="btn" href="index.php?signup='1'">Signup</a>
+					<p><strong style="font-size: 70%">Join the fun!</strong></p>
+					<a class="btn" href="index.php?signup='1'" style="font-size:50%; padding:1.5%;">Signup</a>
 					<br/><br/><br/>
-					<p><strong>Already a member?</strong></p>
-					<a class="btn" href="index.php?login='1'">Login</a>
+					<p><strong style="font-size: 70%">Already a member?</strong></p>
+					<a class="btn" href="index.php?login='1'" style="font-size:50%; padding:1.5%;">Login</a>
 				</div>
 			<?php endif ?>
 		<?php endif ?>
 	</div>
 	<br/>
 	<br/>
-    <!--  -->
-    <!-- Modal content -->
-    <!-- <div class="modal-content">
-        <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>Modal Header</h2>
-        </div>
-        <div class="modal-body">
-            <p>Some text in the Modal Body</p>
-            <p>Some other text...</p>
-        </div>
-        <div class="modal-footer">
-            <h3>Modal Footer</h3>
-        </div>
-    </div> -->
-    <!--  -->
     <?php include("footer.php");?>
 
 </body>

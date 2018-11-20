@@ -13,7 +13,7 @@
 		<input type="password" name="password">
 	</div>
 	<div class="input-group">
-		<button type="submit" class="btn" name="login_user">Login</button>
+		<button type="submit" class="btn" name="login_user" style="font-size:90%; padding:1%;">Login</button>
 	</div>
 	<p>
 		Not yet a member? <a href="index.php?signup='1'">Sign up</a>

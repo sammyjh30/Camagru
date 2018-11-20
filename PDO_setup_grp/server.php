@@ -70,6 +70,7 @@ if (isset($_POST['reg_user'])) {
 			else
 				echo "email sent<br/>";
 			$_SESSION['message'] = "Check your email for the Activation Link.";
+			unset($_SESSION['username']);
 		}
 		else {
 			$error="Something went wrong.Please try again";

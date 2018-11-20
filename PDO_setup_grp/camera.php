@@ -27,7 +27,7 @@
 				</div>				
 				<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 					<div id="status"></div>
-					<button onclick="takeSnapshot()" class="btn">Snapshot!</button>
+					<button onclick="takeSnapshot()" class="btn" style="font-size:90%; padding:1%;">Snapshot!</button>
 					<br/>
 					<div style="margin: auto; width: 40%; text-align: center; align-content: center; color:white; background-color:rgba(0, 0, 0, 0.7);">
 						<input type="file" value="Upload" onchange="upload_picture(); return false;" />
@@ -62,7 +62,7 @@
 					<div class="column-right">
 						<div style="position: relative; left: 0; top: 0;">
 							<img name="image" src="" id='modal-img'>
-							<img src="" id="frame" style="position: absolute; top: 1%; left: 12%; width: 75%;"/>
+							<img src="" id="frame" style="position: absolute; top: 1%; left: 12%; height:75%; width:auto;"/>
 						</div>				
 					</div>
 					<div class="column-left"><br/></div>
