@@ -11,7 +11,8 @@
                 $str = '<div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 2%; display: inline; border-radius: 5px;">';
                 $str .= $row['likes'];
                 $str .= '</div>';
-                $str .= '<button onclick="likePic('.$pic_id.')" class="btn">Like</button>';
+                // $str .= '<button onclick="likePic('.$pic_id.')" class="btn">Like</button>';
+                $str .= '<input type="button" onclick="likePic('.$pic_id.')" class="btn" value="Like">';
                 $str .= '<br/>';
             }
             
@@ -53,6 +54,15 @@
     if(isset($_GET['like_pic'])){
         // $pic_id = $_GET['pic_id'];
         $sql = "UPDATE camagru_db.pictures SET likes = likes + 1 WHERE pic_id = $pic_id";
-        $pdo->exec($sql);
+        // $pdo->exec($sql);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        $stmt = $pdo->prepare("SELECT likes FROM camagru_db.pictures WHERE pic_id=".$pic_id);
+            $stmt->execute();
+        while ($row = $stmt->fetch()) {
+            $str = $row['likes'];
+        }
+        echo $str;
     }
 	?>

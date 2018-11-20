@@ -177,8 +177,29 @@
 		var url = "picture.php?like_pic=1&pic_id="+id;
 
 		like_aj.open("GET", url);
-		// like_aj.addEventListener('readystatechange', handleResponse);
+		like_aj.addEventListener('readystatechange', handleResponse);
 		like_aj.send();
+
+		function handleResponse() {
+			// "this" refers to the object we called addEventListener on
+			var like_aj = this;
+
+			//Exit this function unless the AJAX request is complete, and the server has responded.
+			if (like_aj.readyState != 4)
+				return;
+
+			// If there wasn't an error, run our showResponse function
+			if (like_aj.status == 200) {
+				var ajaxResponse = like_aj.responseText;
+
+				showResponse(ajaxResponse);
+			}
+		}
+
+		function showResponse(ajaxResponse) {
+			var responseContainer = document.querySelector('#likeBox');
+			responseContainer.innerHTML = ajaxResponse;
+		}
 	}
 </script>
 
