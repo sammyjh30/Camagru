@@ -44,6 +44,7 @@
             $str .= '</div>';
             $str .= '<br/>';
             // $str .= '<textarea hidden name="base64" id="base64"></textarea>';
+            $str .= '<input type="text" maxlength="56" name="comment">';
             // $str .= '<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="comment" id="comment"  style="display: inline"></p>';
             $str .= '<button onclick="commentPic('.$pic_id.')" class="btn"  style="display: inline">Comment</button>';
             $str .= '</div>';
