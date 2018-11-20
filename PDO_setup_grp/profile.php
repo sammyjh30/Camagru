@@ -58,17 +58,6 @@
 						<img name="image" src="" id='modal-img' style="margin:auto; height:100%; width:90%; text-align: center; align-content: center;">
 						<br/>
 						<div id="pic_info">
-							<!-- <div id="likeCount"></div> -->
-							<!-- <div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 2%; display: inline; border-radius: 5px;">0</div>
-							<button onclick="likePic()" class="btn">Like</button>
-							<br/>
-							<div id="comment-box" style="background-color:rgb(255, 255, 255); padding: 5%;">
-								<div id="comments"></div>
-								<br/>
-								<textarea hidden name="base64" id="base64"></textarea>
-								<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="comment" id="comment"  style="display: inline"></p>
-								<button onclick="commentPic()" class="btn"  style="display: inline">Comment</button>
-							</div> -->
 						</div>
 					</form>
 				</div>
@@ -155,7 +144,7 @@
 		//getting like and comment section
 		var info = document.getElementById('pic_info');
 		var mod_aj = new XMLHttpRequest();
-		var url = "picture.php?pic_id="+id;
+		var url = "picture.php?open_pic=1&pic_id="+id;
 
 		mod_aj.open("GET", url);
 		mod_aj.addEventListener('readystatechange', handleResponse);
@@ -179,14 +168,17 @@
 
 		function showResponse(ajaxResponse) {
 			var responseContainer = document.querySelector('#scrollContent');
-
-			// Create a new span tag to hold the response
-			// var span = document.createElement('span');
 			info.innerHTML = ajaxResponse;
-
-			// Add the new span to the end of responseContainer
-			// responseContainer.appendChild(info);
 		}
+	}
+
+	function likePic(id) {
+		var like_aj = new XMLHttpRequest();
+		var url = "picture.php?like_pic=1&pic_id="+id;
+
+		like_aj.open("GET", url);
+		// like_aj.addEventListener('readystatechange', handleResponse);
+		like_aj.send();
 	}
 </script>
 
