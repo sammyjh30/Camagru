@@ -11,12 +11,11 @@
                 $str = '<div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 2%; display: inline; border-radius: 5px;">';
                 $str .= $row['likes'];
                 $str .= '</div>';
-                // $str .= '<button onclick="likePic('.$pic_id.')" class="btn">Like</button>';
                 $str .= '<input type="button" onclick="likePic('.$pic_id.')" class="btn" value="Like">';
                 $str .= '<br/>';
             }
             
-            $str .= '<div id="comment-box" style="background-color:rgb(255, 255, 255); padding: 5%;">';
+            $str .= '<div id="comment-box" style="background-color:rgb(255, 255, 255); padding: 5%; border-radius: 5px;">';
             
             $stmt = $pdo->prepare("SELECT title FROM camagru_db.pictures WHERE pic_id=".$pic_id);
             $stmt->execute();
@@ -35,18 +34,21 @@
             }
 
             $str .= '<div id="comments">';
-            $stmt = $pdo->prepare("SELECT comment FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
+            $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
             $stmt->execute();
             while ($row = $stmt->fetch()) {
+                $str .= '<div style="display: inline; font-size: 70%; font-weight: bold; padding-right: 5px;">';
+                $str .= ($row['username']);
+                $str .= '</div>';
+                $str .= '<div style="display: inline; font-size: 70%;">';
                 $str .= ($row['comment']);
+                $str .= '</div>';
                 $str .= "<br>";
             }
             $str .= '</div>';
             $str .= '<br/>';
-            // $str .= '<textarea hidden name="base64" id="base64"></textarea>';
-            $str .= '<input type="text" maxlength="56" name="comment">';
-            // $str .= '<p class="upload-font"><input class="upload-box" required type="text" pattern="[^()/><\][\\\x22,;|]+" name="comment" id="comment"  style="display: inline"></p>';
-            $str .= '<button onclick="commentPic('.$pic_id.')" class="btn"  style="display: inline">Comment</button>';
+            $str .= '<input type="text" maxlength="56" name="comment" id="comment" style="width:60%; padding: 10px;">';
+            $str .= '<input type="button" onclick="commentPic('.$pic_id.')" class="btn" value="Comment" style="font-size:small; width: 30%">';
             $str .= '</div>';
         
             echo $str;
@@ -60,10 +62,77 @@
         $stmt->execute();
 
         $stmt = $pdo->prepare("SELECT likes FROM camagru_db.pictures WHERE pic_id=".$pic_id);
-            $stmt->execute();
+        $stmt->execute();
         while ($row = $stmt->fetch()) {
             $str = $row['likes'];
         }
         echo $str;
+    }
+
+    if(isset($_GET['comment_pic'])){
+        $comment = $_GET['comment'];
+        $username = $_SESSION['username'];
+        // $sql = "INSERT INTO camagru_db.comments (pic_id, comment) VALUES ('$pic_id', '$comment')";
+        $sql = "INSERT INTO camagru_db.comments (pic_id, username, comment) VALUES ('$pic_id', '$username', '$comment')";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        $stmt = $pdo->prepare("SELECT username FROM camagru_db.pictures WHERE pic_id=$pic_id");
+        $stmt->execute();
+        // echo "test 1";
+        while ($row = $stmt->fetch()) {
+            // echo "test 2";
+            $img_username = $row['username'];
+           echo $img_username;
+        }
+
+        $stmt = $pdo->prepare("SELECT email FROM camagru_db.users WHERE username=$img_username");
+        $stmt->execute();
+        // echo "test 1";
+        while ($row = $stmt->fetch()) {
+        //     echo "test 2";
+            $email = $row['email'];
+            echo $email;
+        }
+        echo "test 3";
+        // echo $email;
+
+        // //Send email
+		// $base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
+
+        // $header = "From: noreply@localhost.co.za\r\n";
+        // $header .= "Reply-To: noreply@localhost.co.za\r\n";
+        // $header .= "Return-Path: noreply@localhost.co.za\r\n";
+        // $header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        // $message = "<h1>Your Post Got A Comment!</h1><br/>
+        //             <p>Hello $img_username,</p>
+        //             <p>Someone ahs commented on your post!.</p>
+        //             <p>Click here to go check it out!</p><br/>
+        //             <p><a href='" . $base_url . "index.php'>
+        //             <button>Camagru</button>
+        //             </a></p>
+        //             <p>Best Regards,<br/>Camagru</p>";
+        // if (mail($email, "Activation email", $message, $header) == false) {
+        //     echo "Error when sending email<br/>";
+        // }
+        // else {
+        //     echo "email sent<br/>";
+
+        // }
+        // echo $str;
+
+        // $str = '';
+        // $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
+        // $stmt->execute();
+        // while ($row = $stmt->fetch()) {
+        //     $str .= '<div style="display: inline; font-size: 70%; font-weight: bold; padding-right: 5px;">';
+        //     $str .= ($row['username']);
+        //     $str .= '</div>';
+        //     $str .= '<div style="display: inline; font-size: 70%;">';
+        //     $str .= ($row['comment']);
+        //     $str .= '</div>';
+        //     $str .= "<br>";
+        // }
+        // echo $str;
     }
 	?>

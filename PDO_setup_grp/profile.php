@@ -201,6 +201,37 @@
 			responseContainer.innerHTML = ajaxResponse;
 		}
 	}
+
+	function commentPic(id) {
+		var comment_aj = new XMLHttpRequest();
+		var comment = document.getElementById('comment').value;
+		var url = "picture.php?comment_pic=1&pic_id="+id+"&comment="+comment;
+
+		comment_aj.open("GET", url);
+		comment_aj.addEventListener('readystatechange', handleResponse);
+		comment_aj.send();
+
+		function handleResponse() {
+			// "this" refers to the object we called addEventListener on
+			var comment_aj = this;
+
+			//Exit this function unless the AJAX request is complete, and the server has responded.
+			if (comment_aj.readyState != 4)
+				return;
+
+			// If there wasn't an error, run our showResponse function
+			if (comment_aj.status == 200) {
+				var ajaxResponse = comment_aj.responseText;
+
+				showResponse(ajaxResponse);
+			}
+		}
+
+		function showResponse(ajaxResponse) {
+			var responseContainer = document.querySelector('#comments');
+			responseContainer.innerHTML = ajaxResponse;
+		}
+	}
 </script>
 
 </html>
