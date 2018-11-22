@@ -68,7 +68,7 @@
     }
 
     if(isset($_GET['comment_pic'])){
-        $comment = $_GET['comment'];
+        $comment = addslashes($_GET['comment']);
         $username = $_SESSION['username'];
         $sql = "INSERT INTO camagru_db.comments (pic_id, username, comment) VALUES ('$pic_id', '$username', '$comment')";
         $stmt = $pdo->prepare($sql);
@@ -82,55 +82,36 @@
 
 
         //
-        $stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username=$img_username");
-        // // $stmt = $pdo->prepare("SELECT username, email FROM users WHERE username=:username OR email=:email");
-        // $stmt->execute(array(':username'=>$username, ':email'=>$email));
-        // $row=$stmt->fetch(PDO::FETCH_ASSOC);
-    
-        // // while ($row = $stmt->fetch()) {
-        // //     echo "test 2";
-        //     $email = $row['email'];
-        //     echo $email;
-        // // }
-        // echo "test 3";
-
-        // if ($row['username']==$username) { array_push($errors, "sorry username already taken !"); }
-        // else if ($row['email']==$email) { array_push($errors, "sorry email id already taken !"); }
-        // else { echo "Username and email OK!<br/>"; }
-            //
-        // $stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username=$img_username");
-        // $stmt->execute();
-        // echo "test 1";
-        // while ($row = $stmt->fetch()) {
-        //     echo "test 2";
-            // $email = $row['email'];
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username='$username'");
+        $stmt->execute();
+        while ($row = $stmt->fetch()) {
+            $email = $row['email'];
             // echo $email;
-        // }
-        // echo "test 3";
-        // echo $email;
+        }
 
-        // //Send email
-		// $base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
 
-        // $header = "From: noreply@localhost.co.za\r\n";
-        // $header .= "Reply-To: noreply@localhost.co.za\r\n";
-        // $header .= "Return-Path: noreply@localhost.co.za\r\n";
-        // $header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-        // $message = "<h1>Your Post Got A Comment!</h1><br/>
-        //             <p>Hello $img_username,</p>
-        //             <p>Someone ahs commented on your post!.</p>
-        //             <p>Click here to go check it out!</p><br/>
-        //             <p><a href='" . $base_url . "index.php'>
-        //             <button>Camagru</button>
-        //             </a></p>
-        //             <p>Best Regards,<br/>Camagru</p>";
-        // if (mail($email, "Activation email", $message, $header) == false) {
-        //     echo "Error when sending email<br/>";
-        // }
-        // else {
-        //     echo "email sent<br/>";
+        //Send email
+		$base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
 
-        // }
+        $header = "From: noreply@localhost.co.za\r\n";
+        $header .= "Reply-To: noreply@localhost.co.za\r\n";
+        $header .= "Return-Path: noreply@localhost.co.za\r\n";
+        $header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        $message = "<h1>Your Post Got A Comment!</h1><br/>
+                    <p>Hello $username,</p>
+                    <p>Someone has commented on your post!.</p>
+                    <p>Click here to go check it out!</p><br/>
+                    <p><a href='" . $base_url . "index.php'>
+                    <button>Camagru</button>
+                    </a></p>
+                    <p>Best Regards,<br/>Camagru</p>";
+        if (mail($email, "Your Post Got A Comment!", $message, $header) == false) {
+            // echo "Error when sending email<br/>";
+        }
+        else {
+            // echo "email sent<br/>";
+
+        }
         // echo $str;
 
         $str = '';
