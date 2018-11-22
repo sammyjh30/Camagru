@@ -5,13 +5,17 @@
         $pic_id = $_GET['pic_id'];
 
         if(isset($_GET['open_pic']) && isset($_SESSION['username'])){
-            $stmt = $pdo->prepare("SELECT likes FROM camagru_db.pictures WHERE pic_id=".$pic_id);
+            //Likes & delete
+            $stmt = $pdo->prepare("SELECT * FROM camagru_db.pictures WHERE pic_id=".$pic_id);
             $stmt->execute();
             while ($row = $stmt->fetch()) {
                 $str = '<div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 2%; display: inline; border-radius: 5px;">';
                 $str .= $row['likes'];
                 $str .= '</div>';
                 $str .= '<input type="button" onclick="likePic('.$pic_id.')" class="btn" value="Like">';
+                if ($row['username'] == $_SESSION['username']) {
+                    $str .= '<div style="display: inline; padding-left: 4em;"><input type="button" onclick="deletePic('.$pic_id.')" class="btn" value="Delete" style="width:20%; text-align:right"></div>';
+                }
                 $str .= '<br/>';
             }
             
