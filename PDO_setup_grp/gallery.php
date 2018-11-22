@@ -42,8 +42,9 @@
 			$_SESSION["gallery_offset"] += 1;
 			echo $str;
 		?>
-		<p id="responseContainer"></p>
 	</div>
+		<p id="responseContainer"></p>
+	<!-- </div> -->
 	<div>
 		<div id="myModal" class="modal">
 			<div class= "modal-content" style="height:70%;">
@@ -64,7 +65,7 @@
 			</div>
 		</div>
 	</div>
-<div>
+</div>
 
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded',function () {
@@ -244,4 +245,4 @@
 	}
 </script>
 
-</html>
+<!-- </html> -->
