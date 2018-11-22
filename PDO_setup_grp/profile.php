@@ -231,6 +231,7 @@
 			var responseContainer = document.querySelector('#comments');
 			responseContainer.innerHTML = ajaxResponse;
 		}
+		document.getElementById('comment').value = '';
 	}
 </script>
 

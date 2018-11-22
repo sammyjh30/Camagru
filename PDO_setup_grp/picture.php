@@ -55,9 +55,7 @@
     }
 
     if(isset($_GET['like_pic'])){
-        // $pic_id = $_GET['pic_id'];
         $sql = "UPDATE camagru_db.pictures SET likes = likes + 1 WHERE pic_id = $pic_id";
-        // $pdo->exec($sql);
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
@@ -72,29 +70,43 @@
     if(isset($_GET['comment_pic'])){
         $comment = $_GET['comment'];
         $username = $_SESSION['username'];
-        // $sql = "INSERT INTO camagru_db.comments (pic_id, comment) VALUES ('$pic_id', '$comment')";
         $sql = "INSERT INTO camagru_db.comments (pic_id, username, comment) VALUES ('$pic_id', '$username', '$comment')";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
         $stmt = $pdo->prepare("SELECT username FROM camagru_db.pictures WHERE pic_id=$pic_id");
         $stmt->execute();
-        // echo "test 1";
         while ($row = $stmt->fetch()) {
-            // echo "test 2";
-            $img_username = $row['username'];
-           echo $img_username;
+            $username = $row['username'];
         }
 
-        $stmt = $pdo->prepare("SELECT email FROM camagru_db.users WHERE username=$img_username");
-        $stmt->execute();
+
+        //
+        $stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username=$img_username");
+        // // $stmt = $pdo->prepare("SELECT username, email FROM users WHERE username=:username OR email=:email");
+        // $stmt->execute(array(':username'=>$username, ':email'=>$email));
+        // $row=$stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // // while ($row = $stmt->fetch()) {
+        // //     echo "test 2";
+        //     $email = $row['email'];
+        //     echo $email;
+        // // }
+        // echo "test 3";
+
+        // if ($row['username']==$username) { array_push($errors, "sorry username already taken !"); }
+        // else if ($row['email']==$email) { array_push($errors, "sorry email id already taken !"); }
+        // else { echo "Username and email OK!<br/>"; }
+            //
+        // $stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username=$img_username");
+        // $stmt->execute();
         // echo "test 1";
-        while ($row = $stmt->fetch()) {
+        // while ($row = $stmt->fetch()) {
         //     echo "test 2";
-            $email = $row['email'];
-            echo $email;
-        }
-        echo "test 3";
+            // $email = $row['email'];
+            // echo $email;
+        // }
+        // echo "test 3";
         // echo $email;
 
         // //Send email
@@ -121,18 +133,18 @@
         // }
         // echo $str;
 
-        // $str = '';
-        // $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
-        // $stmt->execute();
-        // while ($row = $stmt->fetch()) {
-        //     $str .= '<div style="display: inline; font-size: 70%; font-weight: bold; padding-right: 5px;">';
-        //     $str .= ($row['username']);
-        //     $str .= '</div>';
-        //     $str .= '<div style="display: inline; font-size: 70%;">';
-        //     $str .= ($row['comment']);
-        //     $str .= '</div>';
-        //     $str .= "<br>";
-        // }
-        // echo $str;
+        $str = '';
+        $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
+        $stmt->execute();
+        while ($row = $stmt->fetch()) {
+            $str .= '<div style="display: inline; font-size: 70%; font-weight: bold; padding-right: 5px;">';
+            $str .= ($row['username']);
+            $str .= '</div>';
+            $str .= '<div style="display: inline; font-size: 70%;">';
+            $str .= ($row['comment']);
+            $str .= '</div>';
+            $str .= "<br>";
+        }
+        echo $str;
     }
 	?>
