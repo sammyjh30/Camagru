@@ -19,6 +19,7 @@
                 $str .= '<br/>';
             }
             
+            //Title
             $str .= '<div id="comment-box" style="background-color:rgb(255, 255, 255); padding: 5%; border-radius: 5px;">';
             
             $stmt = $pdo->prepare("SELECT title FROM camagru_db.pictures WHERE pic_id=".$pic_id);
@@ -29,6 +30,7 @@
                 $str .= '</div>';
             }
 
+            //Description
             $stmt = $pdo->prepare("SELECT description FROM camagru_db.pictures WHERE pic_id=".$pic_id);
             $stmt->execute();
             while ($row = $stmt->fetch()) {
@@ -37,6 +39,7 @@
                 $str .= '</div>';
             }
 
+            //Comments
             $str .= '<div id="comments">';
             $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");
             $stmt->execute();
@@ -93,13 +96,11 @@
             $username = $row['username'];
         }
 
-
         //
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username='$username'");
         $stmt->execute();
         while ($row = $stmt->fetch()) {
             $email = $row['email'];
-            // echo $email;
         }
 
 
@@ -123,7 +124,6 @@
         }
         else {
             // echo "email sent<br/>";
-
         }
         // echo $str;
 
@@ -140,5 +140,12 @@
             $str .= "<br>";
         }
         echo $str;
+    }
+
+    if(isset($_GET['delete_pic'])){
+
+		$sql = "DELETE FROM pictures WHERE pic_id = $pic_id;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
     }
 	?>

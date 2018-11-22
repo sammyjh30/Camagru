@@ -82,6 +82,7 @@
 			<?php  if (isset($_SESSION['username'])) : ?>
 				<p><strong>Welcome!</strong></p>
 				<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
+                <?php include("gallery.php");?>
 			<?php else : ?>
 				<div class="coverPage">
 					<p><strong style="font-size: 70%">Join the fun!</strong></p>
@@ -89,6 +90,7 @@
 					<br/><br/><br/>
 					<p><strong style="font-size: 70%">Already a member?</strong></p>
 					<a class="btn" href="index.php?login='1'" style="font-size:50%; padding:1.5%;">Login</a>
+                    <?php include("gallery.php");?>
 				</div>
 			<?php endif ?>
 		<?php endif ?>

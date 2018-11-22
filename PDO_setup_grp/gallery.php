@@ -233,6 +233,15 @@
 		}
 		document.getElementById('comment').value = '';
 	}
+
+	function deletePic(id) {
+		var delete_aj = new XMLHttpRequest();
+		var url = "picture.php?delete_pic=1&pic_id="+id;
+
+		delete_aj.open("GET", url);
+		delete_aj.send();
+        location.reload();
+	}
 </script>
 
 </html>
