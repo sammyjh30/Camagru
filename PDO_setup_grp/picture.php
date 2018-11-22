@@ -4,7 +4,7 @@
 		require('connect.php');
         $pic_id = $_GET['pic_id'];
 
-        if(isset($_GET['open_pic'])){
+        if(isset($_GET['open_pic']) && isset($_SESSION['username'])){
             $stmt = $pdo->prepare("SELECT likes FROM camagru_db.pictures WHERE pic_id=".$pic_id);
             $stmt->execute();
             while ($row = $stmt->fetch()) {
@@ -67,8 +67,17 @@
         echo $str;
     }
 
+    function cleanInput($value)
+	{
+		$value = preg_replace("/[\'\")(;|`,<>]/", "", $value); 
+		return $value;
+	}
+
     if(isset($_GET['comment_pic'])){
-        $comment = addslashes($_GET['comment']);
+        
+        $comment = cleanInput($_GET['comment']);
+        $comment = addslashes($comment);
+
         $username = $_SESSION['username'];
         $sql = "INSERT INTO camagru_db.comments (pic_id, username, comment) VALUES ('$pic_id', '$username', '$comment')";
         $stmt = $pdo->prepare($sql);
