@@ -24,6 +24,9 @@
     }
     if (isset($_GET['profile'])) {
         $_SESSION['window'] = "profile";
+    }
+    if (isset($_GET['settings'])) {
+        $_SESSION['window'] = "settings";
 	}
 	if (isset($_GET['camera'])) {
         $_SESSION['window'] = "camera";
@@ -34,7 +37,7 @@
 <html>
 <head>
     <title>Camagru</title>
-    <link rel="stylesheet" type="text/css" href="style_v11.css">
+    <link rel="stylesheet" type="text/css" href="style_v12.css">
 </head>
 <body>
     <?php include("header.php");?>
@@ -77,7 +80,10 @@
 			<?php unset($_SESSION['window']); ?>
 		<?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "camera") : ?>
 			<?php unset($_SESSION['window']); ?>
-			<?php include("camera.php");?>		
+			<?php include("camera.php");?>
+        <?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "settings") : ?>
+			<?php unset($_SESSION['window']); ?>
+			<?php include("settings.php");?>		
 		<?php else : ?>
 			<?php  if (isset($_SESSION['username'])) : ?>
                 <div style="display: inline;"><p><strong>Welcome <?php echo $_SESSION['username']; ?>!</strong></p></div>
