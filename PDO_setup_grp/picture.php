@@ -12,9 +12,9 @@
                 $str = '<div id="likeBox" style="background-color:rgb(255, 255, 255); padding: 2%; display: inline; border-radius: 5px;">';
                 $str .= $row['likes'];
                 $str .= '</div>';
-                $str .= '<input type="button" onclick="likePic('.$pic_id.')" class="btn" value="Like">';
+                $str .= '<input type="button" onclick="likePic('.$pic_id.')" class="btn" value="Like" style="width:20%;">';
                 if ($row['username'] == $_SESSION['username']) {
-                    $str .= '<div style="display: inline; padding-left: 4em;"><input type="button" onclick="deletePic('.$pic_id.')" class="btn" value="Delete" style="width:20%; text-align:right"></div>';
+                    $str .= '<div style="display: inline; padding-left: 4em;"><input type="button" onclick="deletePic('.$pic_id.')" class="btn" value="Delete" style="width:20%;"></div>';
                 }
                 $str .= '<br/>';
             }
@@ -76,8 +76,15 @@
 
     function cleanInput($value)
 	{
-		$value = preg_replace("/[\'\")(;|`,<>]/", "", $value); 
-		return $value;
+        $search = array(
+        '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+        '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+        '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+        '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+        );
+    
+        $output = preg_replace($search, '', $value);
+        return $output;
 	}
 
     if(isset($_GET['comment_pic'])){

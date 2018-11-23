@@ -7,7 +7,10 @@
 			$limit = 6;
 			
 			$offset = $_SESSION["gallery_offset"] * $limit;
-			$images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
+			// $offset = 0;
+			$username = $_SESSION['username'];
+			$images = "SELECT `username`,`pic`,`pic_id` FROM pictures WHERE username='".$username."' ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset;        
+			// $images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
 			try {
 				$stmt = $pdo->prepare($images);
 				$stmt->execute();
@@ -78,7 +81,7 @@
 			if(scrollHeight-scrollTop == clientHeight){
 				var hr = new XMLHttpRequest();
 				var limit = 6;
-				var url = "get_home_images.php?limit="+limit;
+				var url = "get_profile_images.php?limit="+limit;
 
 				hr.open("GET", url);
 				hr.addEventListener('readystatechange', handleResponse);
