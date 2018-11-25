@@ -103,36 +103,42 @@
             $username = $row['username'];
         }
 
-        //
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username='$username'");
+        //Check if email notification is on
+        $sql = "SELECT notify FROM camagru_db.users WHERE username='".$username."'";
+        $stmt = $pdo->prepare($sql);
         $stmt->execute();
-        while ($row = $stmt->fetch()) {
-            $email = $row['email'];
-        }
+        $results = $stmt->fetch();
+        if ($results['notify'] === "Y") { 
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username='$username'");
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                $email = $row['email'];
+            }
 
 
-        //Send email
-		$base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
+            //Send email
+            $base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
 
-        $header = "From: noreply@localhost.co.za\r\n";
-        $header .= "Reply-To: noreply@localhost.co.za\r\n";
-        $header .= "Return-Path: noreply@localhost.co.za\r\n";
-        $header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-        $message = "<h1>Your Post Got A Comment!</h1><br/>
-                    <p>Hello $username,</p>
-                    <p>Someone has commented on your post!.</p>
-                    <p>Click here to go check it out!</p><br/>
-                    <p><a href='" . $base_url . "index.php'>
-                    <button>Camagru</button>
-                    </a></p>
-                    <p>Best Regards,<br/>Camagru</p>";
-        if (mail($email, "Your Post Got A Comment!", $message, $header) == false) {
-            // echo "Error when sending email<br/>";
+            $header = "From: noreply@localhost.co.za\r\n";
+            $header .= "Reply-To: noreply@localhost.co.za\r\n";
+            $header .= "Return-Path: noreply@localhost.co.za\r\n";
+            $header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+            $message = "<h1>Your Post Got A Comment!</h1><br/>
+                        <p>Hello $username,</p>
+                        <p>Someone has commented on your post!.</p>
+                        <p>Click here to go check it out!</p><br/>
+                        <p><a href='" . $base_url . "index.php'>
+                        <button>Camagru</button>
+                        </a></p>
+                        <p>Best Regards,<br/>Camagru</p>";
+            if (mail($email, "Your Post Got A Comment!", $message, $header) == false) {
+                // echo "Error when sending email<br/>";
+            }
+            else {
+                // echo "email sent<br/>";
+            }
+            // echo $str;
         }
-        else {
-            // echo "email sent<br/>";
-        }
-        // echo $str;
 
         $str = '';
         $stmt = $pdo->prepare("SELECT * FROM camagru_db.comments WHERE pic_id=".$pic_id." ORDER BY sub_datetime DESC LIMIT 5");

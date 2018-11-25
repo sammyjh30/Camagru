@@ -35,21 +35,17 @@
                 $stmt->execute();
                 $results = $stmt->fetch();
             ?>
-             <?php if ($results['notify'] == "Y") : ?>
+             <?php if ($results['notify'] === "Y") : ?>
                 <label class="switch">
                     <input type="checkbox" checked="true" name="notify" class="checkbox">
                     <span class="slider round"></span>
                 </label>
             <?php else : ?>
                 <label class="switch">
-                    <input type="checkbox" checked="" name="notify" class="checkbox">
+                    <input type="checkbox" name="notify" class="checkbox">
                     <span class="slider round"></span>
                 </label>
             <?php endif ?>
-            <!-- <label class="switch">
-                <input type="checkbox" checked="true" name="notify" class="checkbox">
-                <span class="slider round"></span>
-            </label> -->
         </div>
         <div class="input-group">
             <button type="submit" class="btn" name="change_settings" style="font-size:90%; padding:1%;">Save Changes</button>

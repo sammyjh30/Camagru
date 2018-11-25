@@ -164,12 +164,12 @@ if (isset($_POST['change_settings'])) {
 			$old_name = $_SESSION['username'];
 			
 			if (!empty($name)) {
-				$sql = "UPDATE camagru_db.users SET name='".$name."' WHERE name='".$name."'";
+				$sql = "UPDATE camagru_db.users SET name='".$name."' WHERE username='".$old_name."'";
 				$stmt = $pdo->prepare($sql);
 				$stmt->execute();
 			}
 			if (!empty($surname)) {
-				$sql = "UPDATE camagru_db.users SET username='".$username."' WHERE username='".$old_name."'";
+				$sql = "UPDATE camagru_db.users SET surname='".$surname."' WHERE username='".$old_name."'";
 				$stmt = $pdo->prepare($sql);
 				$stmt->execute();
 			}
@@ -200,6 +200,9 @@ if (isset($_POST['change_settings'])) {
 				$stmt = $pdo->prepare($sql);
 				$stmt->execute();
 				$sql = "UPDATE camagru_db.pictures SET username='".$username."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+				$sql = "UPDATE camagru_db.comments SET username='".$username."' WHERE username='".$old_name."'";
 				$stmt = $pdo->prepare($sql);
 				$stmt->execute();
 				$_SESSION['username'] = $username;
