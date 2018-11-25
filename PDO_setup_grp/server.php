@@ -133,4 +133,92 @@ if(isset($_POST['submit_pic'])){
 	$pdo->exec($sql);
 }
 
+//Change settings
+if (isset($_POST['change_settings'])) {
+	//Retrieve the field values from our registration form.
+	$username = !empty($_POST['username']) ? trim($_POST['username']) : null;
+	$name = !empty($_POST['name']) ? trim($_POST['name']) : null;
+	$surname = !empty($_POST['surname']) ? trim($_POST['surname']) : null;
+	$email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+	$password_1 = !empty($_POST['password_1']) ? trim($_POST['password_1']) : null;
+	$password_2 = !empty($_POST['password_2']) ? trim($_POST['password_2']) : null;
+	// $notify = 
+	$value = $_POST['notify'];
+	// echo $value;   
+
+	if (empty($password_2) && !empty($password_1)) { array_push($errors, "Password confirmation is required"); }
+	if ($password_1 != $password_2) { array_push($errors, "Your two passwords do not match"); }
+	if (!empty($email)) { 
+		$sql = "SELECT email FROM camagru_db.users WHERE email='".$email."'";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		$results = $stmt->fetchALL();
+		if (sizeof($results) >= 1) {
+			array_push($errors, "Email address already exists");
+		}
+	}
+
+	if (count($errors) == 0) {
+		try
+		{
+			$old_name = $_SESSION['username'];
+			
+			if (!empty($name)) {
+				$sql = "UPDATE camagru_db.users SET name='".$name."' WHERE name='".$name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			if (!empty($surname)) {
+				$sql = "UPDATE camagru_db.users SET username='".$username."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			if (!empty($email)) {
+				$sql = "UPDATE camagru_db.users SET email='".$email."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			if (!empty($password_1)) {
+				$hash = hash("whirlpool", $password_1);
+				$sql = "UPDATE camagru_db.users SET password='".$hash."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			if ($value === "on") {
+				$sql = "UPDATE camagru_db.users SET notify='Y' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			else {
+				$sql = "UPDATE camagru_db.users SET notify='N' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+			}
+			if (!empty($username)) {
+				$old_name = $_SESSION['username'];
+				$sql = "UPDATE camagru_db.users SET username='".$username."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+				$sql = "UPDATE camagru_db.pictures SET username='".$username."' WHERE username='".$old_name."'";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+				$_SESSION['username'] = $username;
+			}
+
+		}
+		catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+
+		unset($_SESSION['window']);
+		header('Location: index.php');
+	}
+	else {
+		$_SESSION['error'] = $errors[0];
+	}
+	unset($_SESSION['window']);
+	header("Location: index.php");
+}
+
+
 ?>
