@@ -137,7 +137,6 @@
             else {
                 // echo "email sent<br/>";
             }
-            // echo $str;
         }
 
         $str = '';

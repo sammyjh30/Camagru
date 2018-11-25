@@ -31,6 +31,9 @@
 	if (isset($_GET['camera'])) {
         $_SESSION['window'] = "camera";
     }
+    if (isset($_GET['forgot'])) {
+        $_SESSION['window'] = "forgot";
+    }
 ?>
 <?php include('server.php') ?>
 <!DOCTYPE html>
@@ -83,7 +86,10 @@
 			<?php include("camera.php");?>
         <?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "settings") : ?>
 			<?php unset($_SESSION['window']); ?>
-			<?php include("settings.php");?>		
+			<?php include("settings.php");?>
+        <?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "forgot") : ?>
+			<?php unset($_SESSION['window']); ?>
+			<?php include("forgot_password.php");?>		
 		<?php else : ?>
 			<?php  if (isset($_SESSION['username'])) : ?>
                 <div style="display: inline;"><p><strong>Welcome <?php echo $_SESSION['username']; ?>!</strong></p></div>

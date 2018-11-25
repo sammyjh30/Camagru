@@ -16,6 +16,9 @@
 		<button type="submit" class="btn" name="login_user" style="font-size:90%; padding:1%;">Login</button>
 	</div>
 	<p>
+		<a href="index.php?forgot='1'">Forgot your password?</a>
+	</p>
+	<p>
 		Not yet a member? <a href="index.php?signup='1'">Sign up</a>
 	</p>
 </form>

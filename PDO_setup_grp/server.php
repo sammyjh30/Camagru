@@ -122,6 +122,65 @@ if (isset($_POST['login_user'])) {
 		header('location: index.php');
 	}
 }
+
+
+// Forgot Password
+if (isset($_POST['forgot_password'])) {
+	$stmt = $conn->prepare("SELECT id FROM camagru_db.users WHERE email = :email");
+	$stmt->execute(["email"=>$_POST['email']]);
+	$results = $stmt->fetchAll();
+	$token = $results[0]['token'];
+	$ver_link = "http://localhost:8080/camagru/password_reset.php?token=".$token; //contruct reset link
+	//send reset email          
+	$msg = "Please follow the link below,\nto reset your account:\n$ver_link";
+	$msg = wordwrap($msg,70);
+	$email = $_POST['email'];
+	// mail("$email","Password reset link for Camagru",$msg);
+	header("location:password_reset_notification.php");
+		unset($_SESSION['window']);
+		header('location: index.php');
+}
+
+if (isset($_POST['password_reset'])) {
+	
+	//Retrieve the field values from our login form.
+    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
+    $password = !empty($_POST['password']) ? trim($_POST['password']) : null;
+    
+	if (empty($username)) { array_push($errors, "Username is required"); }
+	if (empty($password)) { array_push($errors, "Password is required"); }
+
+	if (count($errors) == 0) {
+		$password = hash("whirlpool", $password);		
+		
+		//Retrieve the user account information for the given username.
+		$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND password = :pass");
+
+		//Execute.
+		$stmt->execute(["usr"=>$username, "pass"=>$password]);
+
+		//Fetch row.
+		$user = $stmt->fetchAll();
+
+		if (sizeof($user) == 1) {
+			//checking if verified
+			$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND activated = 'Y'");
+			$stmt->execute(["usr"=>$username]);
+			$user = $stmt->fetchALL();
+			if (sizeof($user) == 1) {
+				$_SESSION['username'] = $username;
+				$_SESSION['success'] = "You are logged in!";
+			}
+			else
+				$_SESSION['error'] = "Please check your email to verify your account!";
+		}
+		else {
+			$_SESSION['error'] = "Failed to get user!";
+		}
+		unset($_SESSION['window']);
+		header('location: index.php');
+	}
+}
   
 //receiving picture
 if(isset($_POST['submit_pic'])){
