@@ -2,7 +2,7 @@
 <div class="header">
 	<h2>Register</h2>
 </div>
-<form method="post" action="register.php">
+<form method="post" action="index.php?signup='1'">
 	<?php include('errors.php'); ?>
 	<div class="input-group">
 		<label>Username</label>

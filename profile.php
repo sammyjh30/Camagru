@@ -2,12 +2,13 @@
   <div id="scrollContent" style="overflow-y: scroll; height: 500px; width: 100%">
 	<div style="height: 500px;">
 		<?php
-			require('connect.php');
+			require('config/database.php');
 
 			$limit = 6;
 			
 			$offset = $_SESSION["gallery_offset"] * $limit;
-			$images = "SELECT `username`,`pic`,`pic_id` FROM pictures ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset."";
+			$username = $_SESSION['username'];
+			$images = "SELECT `username`,`pic`,`pic_id` FROM pictures WHERE username='".$username."' ORDER BY sub_datetime DESC LIMIT ".$limit." OFFSET ".$offset;        
 			try {
 				$stmt = $pdo->prepare($images);
 				$stmt->execute();
@@ -42,9 +43,8 @@
 			$_SESSION["gallery_offset"] += 1;
 			echo $str;
 		?>
-	</div>
 		<p id="responseContainer"></p>
-	<!-- </div> -->
+	</div>
 	<div>
 		<div id="myModal" class="modal">
 			<div class= "modal-content" style="height:70%;">
@@ -65,7 +65,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+<div>
 
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded',function () {
@@ -79,7 +79,7 @@
 			if(scrollHeight-scrollTop == clientHeight){
 				var hr = new XMLHttpRequest();
 				var limit = 6;
-				var url = "get_home_images.php?limit="+limit;
+				var url = "get_profile_images.php?limit="+limit;
 
 				hr.open("GET", url);
 				hr.addEventListener('readystatechange', handleResponse);
@@ -245,4 +245,4 @@
 	}
 </script>
 
-<!-- </html> -->
+</html>

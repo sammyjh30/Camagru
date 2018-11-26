@@ -6,14 +6,14 @@
 					<tr style="width:100%; height:100%;">
 						<br/>
 						<div class="myButton">
-							<input type="image" src="../img/moustache.png" onclick="overlay(0)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+							<input type="image" src="img/moustache.png" onclick="overlay(0)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
 						</div>
 						<br/>
 					</tr>
 					<tr>
 						<br/>
 						<div class="myButton">
-							<input type="image" src="../img/cat.png" onclick="overlay(1)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+							<input type="image" src="img/cat.png" onclick="overlay(1)" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
 						</div>
 						<br/>
 					</tr>
@@ -23,7 +23,7 @@
 			<div class="column-right">
 				<div style="position: relative; left: 0; top: 0;">
 					<video autoplay="true" id="videoElement" style="position:relative; top:0; left:0;"></video>
-					<img src="../img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
+					<img src="img/moustache.png" id="filter" style="position: absolute; top: 60%; left: 40%; width: 25%;"/>
 				</div>				
 				<div class="input-group" style="width: 100%; text-align: center; align-content: center;">
 					<div id="status"></div>
@@ -52,7 +52,7 @@
 							<tr style="width:100%; height:100%;">
 								<br/>
 								<div class="myButton">
-									<input type="image" src="../img/frame.png" onclick="addFrame()" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
+									<input type="image" src="img/frame.png" onclick="addFrame()" class="logo" alt="logo" style="width:100%; height:auto; padding:10px 0px 10px 0px;">
 								</div>
 								<br/>
 							</tr>
@@ -220,7 +220,7 @@
 			var img = document.getElementById('filter');
 			if (num == 1) {
 				//cat ears
-				img.src = "../img/cat.png";
+				img.src = "img/cat.png";
 				img.style.width = '40%';
 				img.style.top = '20%';
 				img.style.left = '30%';
@@ -229,7 +229,7 @@
 			}
 			else {
 				//moustache
-				img.src = "../img/moustache.png";
+				img.src = "img/moustache.png";
 				img.style.width = '25%';
 				img.style.top = '60%';
 				img.style.left = '40%';
@@ -242,7 +242,7 @@
 			//
 			if (frm == 0) {
 				frm = 1;
-				frame.src = "../img/frame.png";
+				frame.src = "img/frame.png";
 			}
 			else {
 				frm = 0;

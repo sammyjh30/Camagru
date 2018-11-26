@@ -1,7 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)) {session_start();}
 
-require('connect.php');
+require('config/database.php');
 
 $username = $_GET['username'];
 $activation_code = $_GET['activation_code'];

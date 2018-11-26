@@ -14,7 +14,7 @@
 				?></h3>
 			</div>
     <?php endif ?>
-    <form method="post" action="password_reset.php">
+    <form method="post" action="index.php?password_reset='1'">
     </div>
         <div class="input-group">
             <label>Password</label>

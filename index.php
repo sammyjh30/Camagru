@@ -1,5 +1,5 @@
 <?php
- session_start();
+    if(!isset($_SESSION)) {session_start();}
 
     if (!isset($_SESSION['username'])) {
         if (!isset($_SESSION['message'])) {
@@ -39,7 +39,6 @@
     }
     if (isset($_GET['forgot'])) {
         $_SESSION['window'] = "forgot";
-        // if (!isset($_SESSION['username'])) {unset($_SESSION['window']);}
     }
 ?>
 <?php include('server.php') ?>
@@ -105,6 +104,7 @@
                 <div style="display: inline;"><p><strong>Welcome <?php echo $_SESSION['username']; ?>!</strong></p></div>
                 <br/><br/>
                 <?php $_SESSION["gallery_offset"] = 0;?>
+
                 <?php include("gallery.php");?>
 			<?php else : ?>
 				<div class="coverPage">
@@ -114,7 +114,7 @@
 					<p><strong style="font-size: 70%">Already a member?</strong></p>
 					<a class="btn" href="index.php?login='1'" style="font-size:50%; padding:1.5%;">Login</a>
                     <br/><br/>
-                     <?php $_SESSION["gallery_offset"] = 0;?>
+                    <?php $_SESSION["gallery_offset"] = 0;?>
                     <?php include("gallery.php");?>
 				</div>
 			<?php endif ?>

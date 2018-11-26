@@ -1,7 +1,7 @@
 <?php
-		session_start();
+    if(!isset($_SESSION)) {session_start();}
 
-		require('connect.php');
+		require('config/database.php');
         $pic_id = $_GET['pic_id'];
 
         if(isset($_GET['open_pic']) && isset($_SESSION['username'])){
@@ -117,7 +117,7 @@
 
 
             //Send email
-            $base_url = "http://localhost:8080/Camagru/PDO_setup_grp/";
+            $base_url = "http://localhost:8080/Camagru//";
 
             $header = "From: noreply@localhost.co.za\r\n";
             $header .= "Reply-To: noreply@localhost.co.za\r\n";

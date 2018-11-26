@@ -1,7 +1,6 @@
 <?php include('server.php') ?>
 <div>
     <form method="post" action="settings.php">
-    <!-- <form method="post" action="index.php?settings='1'"> -->
         <?php include('errors.php'); ?>
         <div class="input-group">
             <label>Change Username</label>
