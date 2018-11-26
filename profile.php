@@ -16,7 +16,7 @@
 			} catch (Exception $ex) {
 				echo $ex->getMessage();
 			}
-
+			$str = "";
 			if (count($results) > 0) {
 				$i = 0;
 				$str = '<div>' . PHP_EOL;

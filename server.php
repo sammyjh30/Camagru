@@ -71,7 +71,7 @@
 				$_SESSION['error'] = $error;
 			}
 			unset($_SESSION['window']);
-			header('Location: index.php');
+			// header('Location: index.php');
 		}
 	}
 
@@ -102,6 +102,7 @@
 				$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND activated = 'Y'");
 				$stmt->execute(["usr"=>$username]);
 				$user = $stmt->fetchALL();
+				// if (sizeof($user) == 1 && $user['activated'] == "Y") {
 				if (sizeof($user) == 1) {
 					$_SESSION['username'] = $username;
 					$_SESSION['success'] = "You are logged in!";
@@ -113,7 +114,7 @@
 				$_SESSION['error'] = "Failed to get user!";
 			}
 			unset($_SESSION['window']);
-			header('location: index.php');
+			// header('location: index.php');
 		}
 	}
 
