@@ -21,7 +21,7 @@
         </div>
         <div class="input-group">
             <label>Change Password</label>
-            <input type="password" onchange=”this.setCustomValidity(this.validity.patternMismatch ? ‘Must have at least 4 characters’ : ”); if(this.checkValidity()) form.password_two.pattern = this.value;” name="password_1">
+		    <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" name="password_1">
         </div>
         <div class="input-group">
             <label>Confirm Password</label>

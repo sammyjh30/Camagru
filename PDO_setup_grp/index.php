@@ -22,17 +22,24 @@
     if (isset($_GET['signup'])) {
         $_SESSION['window'] = "signup";
     }
+    if (isset($_GET['password_reset'])) {
+        $_SESSION['window'] = "password_reset";
+    }
     if (isset($_GET['profile'])) {
         $_SESSION['window'] = "profile";
+        if (!isset($_SESSION['username'])) {unset($_SESSION['window']);}
     }
     if (isset($_GET['settings'])) {
         $_SESSION['window'] = "settings";
+        if (!isset($_SESSION['username'])) {unset($_SESSION['window']);}
 	}
 	if (isset($_GET['camera'])) {
         $_SESSION['window'] = "camera";
+        if (!isset($_SESSION['username'])) {unset($_SESSION['window']);}
     }
     if (isset($_GET['forgot'])) {
         $_SESSION['window'] = "forgot";
+        // if (!isset($_SESSION['username'])) {unset($_SESSION['window']);}
     }
 ?>
 <?php include('server.php') ?>
@@ -89,7 +96,10 @@
 			<?php include("settings.php");?>
         <?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "forgot") : ?>
 			<?php unset($_SESSION['window']); ?>
-			<?php include("forgot_password.php");?>		
+			<?php include("forgot_password.php");?>
+        <?php elseif (isset($_SESSION['window']) && $_SESSION['window'] == "password_reset") : ?>
+			<?php unset($_SESSION['window']); ?>
+			<?php include("password_reset.php");?>		
 		<?php else : ?>
 			<?php  if (isset($_SESSION['username'])) : ?>
                 <div style="display: inline;"><p><strong>Welcome <?php echo $_SESSION['username']; ?>!</strong></p></div>

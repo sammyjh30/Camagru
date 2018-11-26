@@ -5,10 +5,6 @@ require('connect.php');
 
 $errors = array(); 
 
-$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr OR email = :eml");
-$stmt->execute(["usr"=>$username, "eml"=>$email]);
-$results = $stmt->fetchAll();
-
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
 	//Retrieve the field values from our registration form.
@@ -126,59 +122,68 @@ if (isset($_POST['login_user'])) {
 
 // Forgot Password
 if (isset($_POST['forgot_password'])) {
-	$stmt = $conn->prepare("SELECT id FROM camagru_db.users WHERE email = :email");
-	$stmt->execute(["email"=>$_POST['email']]);
-	$results = $stmt->fetchAll();
-	$token = $results[0]['token'];
-	$ver_link = "http://localhost:8080/camagru/password_reset.php?token=".$token; //contruct reset link
-	//send reset email          
-	$msg = "Please follow the link below,\nto reset your account:\n$ver_link";
-	$msg = wordwrap($msg,70);
 	$email = $_POST['email'];
-	// mail("$email","Password reset link for Camagru",$msg);
-	header("location:password_reset_notification.php");
-		unset($_SESSION['window']);
-		header('location: index.php');
+	$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE email = '".$email."'");
+	$stmt->execute();
+	$results = $stmt->fetch();
+	$username = $results['username'];
+	$token = $results['activation_code'];
+	$ver_link = 'http://localhost:8080/Camagru/PDO_setup_grp/index.php?password_reset="1"&token= "'.$token.'"';
+
+	$email = $_POST['email'];
+	$header = "From: noreply@localhost.co.za\r\n";
+	
+	$header .= "Reply-To: noreply@localhost.co.za\r\n";
+	$header .= "Return-Path: noreply@localhost.co.za\r\n";
+	$header .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	$message = "<h1>Password Reset</h1><br/>
+				<p>Hello $username,</p>
+				<p>It seems you are trying to change your password.</p>
+				<p>Please click on the button below to go to reset your password:</p><br/>
+				<p><a href='" . $ver_link . "'>
+				<button>Camagru</button>
+				</a></p>
+				<p>Best Regards,<br />Camagru</p>";
+	if (mail($email, "Password Reset", $message, $header) == false)
+		$_SESSION['error'] = "Error when sending email<br/>";
+	else
+		$_SESSION['message'] = "Check your email for the Password Reset.";
+	unset($_SESSION['window']);
+	header('location: index.php');
 }
 
 if (isset($_POST['password_reset'])) {
 	
-	//Retrieve the field values from our login form.
-    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
-    $password = !empty($_POST['password']) ? trim($_POST['password']) : null;
-    
-	if (empty($username)) { array_push($errors, "Username is required"); }
-	if (empty($password)) { array_push($errors, "Password is required"); }
+	if(isset($_SESSION['token'])) {
+		$token = $_SESSION['token'];
+		$token = str_replace('"', "", $token);
+	}
+	else
+		{array_push($errors, "Invalid token");}
+	$password_1 = !empty($_POST['password_1']) ? trim($_POST['password_1']) : null;
+	$password_2 = !empty($_POST['password_2']) ? trim($_POST['password_2']) : null;
+	if (empty($password_1)){array_push($errors, "Password is required");}
+	if (empty($password_2)){array_push($errors, "Password Confirmation is required");}
+	if ($password_1 != $password_2){array_push($errors, "Passwords do not match");}
+	if(count($errors) == 0){
+		try {
+			$hash = hash("whirlpool", $password_1);
+			$sql = "UPDATE camagru_db.users SET password='".$hash."' WHERE activation_code='".$token."'";
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
 
-	if (count($errors) == 0) {
-		$password = hash("whirlpool", $password);		
-		
-		//Retrieve the user account information for the given username.
-		$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND password = :pass");
-
-		//Execute.
-		$stmt->execute(["usr"=>$username, "pass"=>$password]);
-
-		//Fetch row.
-		$user = $stmt->fetchAll();
-
-		if (sizeof($user) == 1) {
-			//checking if verified
-			$stmt = $pdo->prepare("SELECT * FROM camagru_db.users WHERE username = :usr AND activated = 'Y'");
-			$stmt->execute(["usr"=>$username]);
-			$user = $stmt->fetchALL();
-			if (sizeof($user) == 1) {
-				$_SESSION['username'] = $username;
-				$_SESSION['success'] = "You are logged in!";
-			}
-			else
-				$_SESSION['error'] = "Please check your email to verify your account!";
+			unset($_SESSION['token']);
+			unset($_SESSION['window']);
+			$_SESSION['message'] = "Password Reset Successful";
+			header('location: index.php');
 		}
-		else {
-			$_SESSION['error'] = "Failed to get user!";
+		catch(PDOException $e) {
+			echo $e->getMessage();
 		}
-		unset($_SESSION['window']);
-		header('location: index.php');
+	}
+	else {
+		$_SESSION['error'] = $errors[0];
+		header("Refresh:0");
 	}
 }
   
@@ -202,7 +207,8 @@ if (isset($_POST['change_settings'])) {
 	$password_1 = !empty($_POST['password_1']) ? trim($_POST['password_1']) : null;
 	$password_2 = !empty($_POST['password_2']) ? trim($_POST['password_2']) : null;
 	// $notify = 
-	$value = $_POST['notify'];
+	$value = !empty($_POST['notify']) ? trim($_POST['notify']) : null;
+	// $value = $_POST['notify'];
 	// echo $value;   
 
 	if (empty($password_2) && !empty($password_1)) { array_push($errors, "Password confirmation is required"); }
